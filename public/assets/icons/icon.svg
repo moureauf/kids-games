@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <title>Kids games</title>
+  <rect width="512" height="512" fill="#fff7e8"/>
+  <g fill="none" stroke-linecap="round" stroke-width="30">
+    <path d="M106 356a150 150 0 0 1 300 0" stroke="#ff7a59"/>
+    <path d="M138 356a118 118 0 0 1 236 0" stroke="#ffc94d"/>
+    <path d="M170 356a86 86 0 0 1 172 0" stroke="#5cc8a8"/>
+    <path d="M202 356a54 54 0 0 1 108 0" stroke="#6f8cff"/>
+  </g>
+  <path d="M256 96l13 27 30 4-22 21 6 30-27-15-27 15 6-30-22-21 30-4z" fill="#2b2140" stroke="#2b2140" stroke-linejoin="round" stroke-width="8"/>
+  <g fill="#ffffff" stroke="#e9dcc6" stroke-width="4">
+    <path d="M78 392a26 26 0 0 1 22-38 34 34 0 0 1 62-6 26 26 0 0 1 22 44z"/>
+    <path d="M328 392a26 26 0 0 1 22-38 34 34 0 0 1 62-6 26 26 0 0 1 22 44z"/>
+  </g>
+</svg>

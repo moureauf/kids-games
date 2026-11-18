@@ -3,7 +3,7 @@
 Small educational games for young children, made for the iPad. They work
 offline after the first visit.
 
-Play: https://moureauf.github.io/kids-games/ (on the iPad, use Share → Add
+Play: https://francoismoureau.com/kids-games/ (on the iPad, use Share → Add
 to Home Screen).
 
 - No ads, no tracking, no accounts, no timers.

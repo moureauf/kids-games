@@ -11,7 +11,8 @@
 		"typecheck": "tsc --noEmit",
 		"test": "vitest run",
 		"e2e": "playwright test",
-		"shots": "playwright test --project=ipad-webkit --grep @shot"
+		"shots": "playwright test --project=ipad-webkit --grep @shot",
+		"icons": "pwa-assets-generator"
 	},
 	"license": "MIT",
 	"type": "module",
@@ -19,8 +20,10 @@
 		"@biomejs/biome": "^2.6.8",
 		"@playwright/test": "^1.65.1",
 		"@types/node": "^26.6.6",
+		"@vite-pwa/assets-generator": "^2.0.0",
 		"typescript": "^7.0.2",
 		"vite": "^8.3.8",
+		"vite-plugin-pwa": "^2.0.0",
 		"vitest": "^5.1.1"
 	},
 	"private": true
