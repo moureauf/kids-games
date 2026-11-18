@@ -2,7 +2,7 @@
 
 Educational browser games for two young children (a 4-year-old starting
 Reception, and a child of almost 2). iPad first. Public repo, deployed to
-GitHub Pages at https://moureauf.github.io/kids-games/.
+GitHub Pages at https://francoismoureau.com/kids-games/.
 
 Every session must obey this file. If a request conflicts with a rule here,
 stop and ask.
@@ -63,6 +63,10 @@ stop and ask.
   sound and font. After the first load every game works with no network.
 - The offline e2e test must pass, and it must play every game. When you add
   a game, add it to the offline test.
+- PWA config is in `vite.config.ts`. Never list a file twice in the precache
+  (e.g. via `includeAssets` or manifest icons and the glob): Workbox then
+  fails without an error and caches nothing. The offline test catches it.
+- New icon art: edit `public/assets/icons/icon.svg`, then `npm run icons`.
 
 ## Session workflow
 
