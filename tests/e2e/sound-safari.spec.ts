@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { creatures } from "../../src/games/sound-safari/creatures";
+import { ROUND_TAPS } from "../../src/games/sound-safari/round";
 import { installSpeechStub, spoken } from "./helpers/speech-stub";
 
 const label = (en: string) => en[0]?.toUpperCase() + en.slice(1);
@@ -170,4 +171,98 @@ test("the scene fits an iPad held upright @shot", async ({
 	await page.screenshot({
 		path: `screenshots/${testInfo.project.name}/sound-safari-portrait.png`,
 	});
+});
+
+test("a round is ROUND_TAPS taps, then the bus comes", async ({ page }) => {
+	await installSpeechStub(page);
+	await page.goto("./#/sound-safari");
+	const bus = page.getByRole("img", { name: "The safari bus" });
+	for (let i = 0; i < ROUND_TAPS - 1; i++) {
+		const c = creatures[i % creatures.length];
+		if (c) await page.locator(`[data-creature="${c.id}"]`).tap();
+	}
+	await expect(page.locator(".creature")).toHaveCount(6);
+	await expect(bus).toHaveCount(0);
+	await page.getByRole("button", { name: "Cow" }).tap();
+	await expect(bus).toBeVisible();
+});
+
+test("after the last tap the bus takes everyone home @shot", async ({
+	page,
+}, testInfo) => {
+	await installSpeechStub(page);
+	await page.goto("./?e2e&safariTaps=3#/sound-safari");
+	for (const name of ["Cow", "Pig", "Sheep"]) {
+		await page.getByRole("button", { name }).tap();
+	}
+	const bus = page.getByRole("img", { name: "The safari bus" });
+	await expect(bus).toBeVisible();
+	// The bus stops in the meadow and everyone waves goodbye.
+	await expect(bus).toHaveAttribute("data-step", "wave");
+	await expect
+		.poll(() => spoken(page))
+		.toEqual([
+			{ text: "cow", lang: "en-GB" },
+			{ text: "pig", lang: "en-GB" },
+			{ text: "sheep", lang: "en-GB" },
+			{ text: "Bye bye!", lang: "en-GB" },
+		]);
+	const wave = await page
+		.locator('[data-creature="duck"] .figure')
+		.evaluate((el) => getComputedStyle(el).animationName);
+	expect(wave).toBe("safari-wave");
+	await page.screenshot({
+		path: `screenshots/${testInfo.project.name}/sound-safari-bus.png`,
+	});
+
+	// A tap now does nothing: no movement, no name.
+	const duck = page.getByRole("button", { name: "Duck" });
+	await duck.tap();
+	await expect(duck).not.toHaveClass(/anim-/);
+
+	// The bus drives home, then the end screen shows.
+	await expect(page.getByText("Well done for trying!")).toBeVisible({
+		timeout: 10_000,
+	});
+	await expect(page.locator(".creature")).toHaveCount(0);
+	await expect(bus).toHaveCount(0);
+
+	// Taps where the scene was do nothing, and nothing starts again.
+	await page.touchscreen.tap(540, 500);
+	await page.touchscreen.tap(200, 700);
+	await expect(page.getByText("Well done for trying!")).toBeVisible();
+	await expect(page.locator(".creature")).toHaveCount(0);
+	expect((await spoken(page)).map((s) => s.text)).toEqual([
+		"cow",
+		"pig",
+		"sheep",
+		"Bye bye!",
+	]);
+	await expect(page).toHaveURL(/#\/sound-safari$/);
+});
+
+test("with reduced motion the bus stands still, then the round ends", async ({
+	page,
+}) => {
+	await page.emulateMedia({ reducedMotion: "reduce" });
+	await installSpeechStub(page);
+	await page.goto("./?e2e&safariTaps=2#/sound-safari");
+	await page.getByRole("button", { name: "Pig" }).tap();
+	await page.getByRole("button", { name: "Tractor" }).tap();
+	const bus = page.getByRole("img", { name: "The safari bus" });
+	await expect(bus).toHaveAttribute("data-step", "wave");
+	const motion = await bus.evaluate((el) => {
+		const figure = document.querySelector('[data-creature="cow"] .figure');
+		return {
+			bus: getComputedStyle(el).animationName,
+			busTransform: getComputedStyle(el).transform,
+			creature: figure ? getComputedStyle(figure).animationName : "",
+		};
+	});
+	expect(motion).toEqual({
+		bus: "safari-hold",
+		busTransform: "none",
+		creature: "none",
+	});
+	await expect(page.getByText("Well done for trying!")).toBeVisible();
 });
