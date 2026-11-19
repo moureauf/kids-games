@@ -1,6 +1,12 @@
+import { createHash } from "node:crypto";
 import { defineConfig, devices } from "@playwright/test";
 
-const port = 4173;
+// Each checkout (git worktree) gets its own port, so parallel sessions never
+// test each other's build. Set PORT to choose one.
+const port =
+	Number(process.env.PORT) ||
+	4200 +
+		(createHash("sha1").update(process.cwd()).digest().readUInt16BE(0) % 800);
 const ipad = devices["iPad (gen 7) landscape"];
 
 // Tests run against the production build, because the service worker only
@@ -20,9 +26,10 @@ export default defineConfig({
 		{ name: "ipad-chromium", use: { ...ipad, browserName: "chromium" } },
 	],
 	webServer: {
-		command: "npm run build && npm run preview",
+		command: `npm run build && npx vite preview --port ${port} --strictPort`,
 		url: `http://localhost:${port}/kids-games/`,
-		reuseExistingServer: !process.env.CI,
+		// Never reuse a server: it may belong to another session's build.
+		reuseExistingServer: false,
 		timeout: 120_000,
 	},
 });

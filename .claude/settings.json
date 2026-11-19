@@ -30,6 +30,8 @@
 			"Bash(gh label list*)",
 			"Bash(gh repo view*)",
 			"Bash(scripts/pr-screenshot.sh *)",
+			"Bash(scripts/claim-issue.sh *)",
+			"Bash(scripts/claim-issue.sh)",
 			"Read(~/notes/scripts/kids/**)"
 		],
 		"deny": [
