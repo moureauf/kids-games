@@ -29,7 +29,13 @@ jobs:
 
   e2e:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 15
+    # Browsers and their system packages come with the image, so CI never
+    # waits on an apt mirror. Keep the tag equal to @playwright/test.
+    container:
+      image: mcr.microsoft.com/playwright:v1.65.1-noble
+    env:
+      PLAYWRIGHT_IMAGE_VERSION: 1.65.1
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -37,18 +43,16 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
-      - id: pw
-        run: echo "version=$(node -p 'require("@playwright/test/package.json").version')" >> "$GITHUB_OUTPUT"
-      - id: pw-cache
-        uses: actions/cache@v6
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ steps.pw.outputs.version }}
-      - if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps webkit chromium
-      - if: steps.pw-cache.outputs.cache-hit == 'true'
-        run: npx playwright install-deps webkit chromium
+        timeout-minutes: 5
+      - name: Check the image matches @playwright/test
+        run: |
+          v=$(node -p 'require("@playwright/test/package.json").version')
+          if [ "$v" != "$PLAYWRIGHT_IMAGE_VERSION" ]; then
+            echo "::error::@playwright/test is $v but the CI image is $PLAYWRIGHT_IMAGE_VERSION. Update container.image and PLAYWRIGHT_IMAGE_VERSION in .github/workflows/ci.yml."
+            exit 1
+          fi
       - run: npm run e2e
+        timeout-minutes: 8
       - uses: actions/upload-artifact@v7
         if: always()
         with:
