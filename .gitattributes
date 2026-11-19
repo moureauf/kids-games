@@ -1,0 +1,10 @@
+* text=auto eol=lf
+*.png binary
+*.ico binary
+*.mp3 binary
+*.m4a binary
+*.ogg binary
+*.opus binary
+*.wav binary
+*.woff2 binary
+package-lock.json linguist-generated=true -diff

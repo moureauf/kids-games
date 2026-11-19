@@ -70,21 +70,20 @@ stop and ask.
 
 ## Session workflow
 
-1. Read this file. Take the issue you were given (or the oldest open issue
-   with no PR).
-2. Branch from main: `issue-<n>-<short-slug>`. **Never push to main.**
-3. One issue per session, one PR per issue. Keep the PR small and inside
-   the issue's done-criterion.
-4. Write tests first where it makes sense (logic in Vitest, behaviour in
-   Playwright).
-5. Run `npm run lint && npm run typecheck && npm test && npm run e2e`. All
-   must pass.
-6. Take iPad screenshots: `npm run shots`, then upload them with
-   `scripts/pr-screenshot.sh <issue> screenshots/ipad-webkit/<file>.png`
-   and paste the printed Markdown into the PR body.
-7. Add one new idea to `IDEAS.md` that obeys the design rules.
-8. Record new assets in `CREDITS.md`.
-9. Open the PR with `Closes #<n>`. **Do not merge.**
+Run **`/next-issue`** (or `/next-issue <n>`). The skill in
+`.claude/skills/next-issue/` has the step-by-step loop. The rules:
+
+- One issue per session, one PR per issue, inside the issue's done-criterion.
+- Branch `issue-<n>-<short-slug>` from an up-to-date main.
+  **Never push to main. Never merge a PR.** A hook and branch protection
+  enforce both.
+- `npm run verify` passes before the PR is opened.
+- The PR has an iPad screenshot, new assets in `CREDITS.md`, and one new
+  idea in `IDEAS.md`.
+- Skip issues labelled `needs:owner` or `blocked`. If an issue needs the
+  owner partway through (a download, a decision, a test on the real iPad),
+  stop, add `needs:owner` with a comment saying exactly what is needed, and
+  end the session.
 
 ## Commands
 
@@ -97,6 +96,8 @@ stop and ask.
 | `npm test` | Vitest unit tests (`tests/unit/`) |
 | `npm run e2e` | Playwright on iPad viewports, against the production build |
 | `npm run shots` | Screenshot tests tagged `@shot` into `screenshots/` |
+| `npm run verify` | Lint, types, unit and e2e: run before every PR |
+| `npm run icons` | Regenerate PNG icons from `public/assets/icons/icon.svg` |
 
 ## Layout
 
@@ -116,4 +117,16 @@ scripts/                  repo tooling
 - Biome formatting (tabs, double quotes). Do not fight the formatter.
 - British English in the UI (en-GB voice). French uses fr-FR.
 - Labels on issues: `game:<name>` (`game:hub` for shared work) and
-  `size:S` or `size:M`.
+  `size:S` or `size:M`. `needs:owner` and `blocked` mark issues a session
+  must skip.
+- Squash merge only; the PR title becomes the commit on main, so write it
+  as a short imperative summary.
+
+## Claude Code setup
+
+- `.claude/settings.json`: allowlist for the usual npm, git and gh commands;
+  denies edits to `~/notes` (read-only vault), `gh pr merge` and pushes to
+  main.
+- Hooks: `.claude/hooks/format.sh` runs Biome on every edited file;
+  `.claude/hooks/guard-main.sh` blocks `git push` to main.
+- Personal overrides go in `.claude/settings.local.json` (git-ignored).

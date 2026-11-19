@@ -12,7 +12,8 @@
 		"test": "vitest run",
 		"e2e": "playwright test",
 		"shots": "playwright test --project=ipad-webkit --grep @shot",
-		"icons": "pwa-assets-generator"
+		"icons": "pwa-assets-generator",
+		"verify": "npm run lint && npm run typecheck && npm test && npm run e2e"
 	},
 	"license": "MIT",
 	"type": "module",
@@ -26,5 +27,8 @@
 		"vite-plugin-pwa": "^2.0.0",
 		"vitest": "^5.1.1"
 	},
-	"private": true
+	"private": true,
+	"engines": {
+		"node": ">=24"
+	}
 }
