@@ -1,4 +1,6 @@
 import { expect, test } from "@playwright/test";
+import { creatures } from "../../src/games/sound-safari/creatures";
+import { installSpeechStub, spoken } from "./helpers/speech-stub";
 
 // After one visit with network, the whole site must work offline.
 // Every game is added to this test when it is built.
@@ -6,6 +8,7 @@ test("works offline after the first load @shot", async ({
 	page,
 	context,
 }, testInfo) => {
+	await installSpeechStub(page);
 	await page.goto("./");
 	// The service worker has cached everything once it controls the page.
 	await page.evaluate(() => navigator.serviceWorker.ready);
@@ -26,6 +29,18 @@ test("works offline after the first load @shot", async ({
 	await expect(page.getByText("Well done for trying!")).toBeVisible();
 	await page.getByRole("button", { name: "Home" }).click();
 	await expect(page.getByRole("link", { name: "Test game" })).toBeVisible();
+
+	// Sound safari: every creature moves and says its name offline.
+	await page.getByRole("link", { name: "Sound safari" }).click();
+	await expect(page.locator(".creature")).toHaveCount(6);
+	for (const c of creatures) {
+		const button = page.locator(`[data-creature="${c.id}"]`);
+		await button.tap();
+		await expect(button).toHaveClass(new RegExp(`anim-${c.animation}`));
+	}
+	await expect
+		.poll(async () => (await spoken(page)).map((s) => s.text))
+		.toEqual(creatures.map((c) => c.en));
 });
 
 test("is installable on the iPad", async ({ page, request }) => {
