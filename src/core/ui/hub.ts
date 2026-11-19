@@ -2,6 +2,8 @@
 // reading is needed. The heading is for grown-ups.
 import type { Game } from "../game";
 import { gameHash } from "../router";
+import { createParentGate, parentGateHoldMs } from "./parent-gate";
+import { openSettingsPanel } from "./settings-panel";
 
 export function createHub(games: readonly Game[]): HTMLElement {
 	const hub = document.createElement("section");
@@ -24,5 +26,10 @@ export function createHub(games: readonly Game[]): HTMLElement {
 		tiles.append(tile);
 	}
 	hub.append(tiles);
+	const gate = createParentGate(
+		() => openSettingsPanel(gate),
+		parentGateHoldMs(location.search),
+	);
+	hub.append(gate);
 	return hub;
 }
