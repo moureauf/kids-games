@@ -1,7 +1,7 @@
 # Ideas
 
 Each build session adds **one new idea** that obeys the design rules in
-[`CLAUDE.md`](CLAUDE.md).
+[`CLAUDE.md`](CLAUDE.md) and [`docs/DESIGN.md`](docs/DESIGN.md).
 
 ## Add an idea
 

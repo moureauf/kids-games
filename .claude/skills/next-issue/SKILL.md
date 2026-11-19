@@ -79,6 +79,13 @@ scripts/pr-screenshot.sh <n> screenshots/ipad-webkit/<file>.png [...]
 Tag new screenshot tests with `@shot`. Look at each image before using
 it. The script prints Markdown for the PR body.
 
+## 6b. Docs
+
+If the change is visible in a game, update `docs/GAMES.md`: status, the
+"How it plays" steps, and a 1080 px wide screenshot in `docs/images/`. If
+it changes the code structure or a shared interface, update
+`docs/ARCHITECTURE.md`. Write in ASD-STE100 style (see `CONTRIBUTING.md`).
+
 ## 7. Idea
 
 Add one new file `ideas/<yyyy-mm-dd>-<slug>.md` in the format shown in

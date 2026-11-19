@@ -85,6 +85,19 @@ Run **`/next-issue`** (or `/next-issue <n>`). The skill in
   stop, add `needs:owner` with a comment saying exactly what is needed, and
   end the session.
 
+## Documentation
+
+Read these when you need more than this file:
+
+- `CONTRIBUTING.md`: install, workflow, tests, stacked PRs, troubleshooting.
+- `docs/ARCHITECTURE.md`: code layout, game contract, offline, CI.
+- `docs/DESIGN.md`: design principles, hints, colours, touch sizes.
+- `docs/GAMES.md`: each game, its plan and status.
+
+Write documentation in ASD-STE100 Simplified Technical English (rules in
+`CONTRIBUTING.md`, Writing style). When a PR changes a game visibly, update
+`docs/GAMES.md` (status, screenshot, "How it plays").
+
 ## Parallel sessions
 
 Several sessions can run at once:
