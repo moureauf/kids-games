@@ -52,7 +52,8 @@ scripts/claim-issue.sh $ARGUMENTS
 - Tests first where it makes sense: logic in `tests/unit/` (Vitest),
   behaviour in `tests/e2e/` (Playwright, iPad projects).
 - A new game or screen goes into `tests/e2e/offline.spec.ts`.
-- Assets: CC0 or original only; add each file to `CREDITS.md`.
+- Assets: CC0 or original only; add each file to `CREDITS.md`, keeping
+  the rows sorted by path.
 - No names, photos or voices of the children, anywhere. Use made-up names
   in tests.
 - If the issue needs the owner (a download, a decision, a check on the real
@@ -80,8 +81,9 @@ it. The script prints Markdown for the PR body.
 
 ## 7. Idea
 
-Add one new row to `IDEAS.md`: dated, obeys the design rules, not a repeat
-of an existing idea.
+Add one new file `ideas/<yyyy-mm-dd>-<slug>.md` in the format shown in
+`IDEAS.md`. It obeys the design rules and does not repeat an existing idea
+(`npm run ideas` lists them). Never edit other idea files or `IDEAS.md`.
 
 ## 8. Commit, push, PR
 

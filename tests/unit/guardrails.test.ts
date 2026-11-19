@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
 	checkCredits,
+	checkCreditsSorted,
 	checkFactFiles,
 	checkFactsModule,
 	listFiles,
@@ -23,6 +24,40 @@ describe("guardrail: CREDITS.md covers every asset (CLAUDE.md, Assets)", () => {
 		expect(assets.length).toBeGreaterThan(0);
 		const errors = checkCredits(markdown, assets);
 		expect(errors, `Fix CREDITS.md:${joinErrors(errors)}`).toEqual([]);
+	});
+
+	it("keeps the rows of each table sorted by file path", () => {
+		const markdown = readFileSync(join(root, "CREDITS.md"), "utf8");
+		const errors = checkCreditsSorted(markdown);
+		expect(errors, `Fix CREDITS.md:${joinErrors(errors)}`).toEqual([]);
+	});
+});
+
+describe("CREDITS sort checker", () => {
+	const table = (...paths: string[]) =>
+		[
+			"| File | Source | Author | Licence |",
+			"|---|---|---|---|",
+			...paths.map((p) => `| \`${p}\` | x | y | CC0 |`),
+		].join("\n");
+
+	it("accepts sorted rows", () => {
+		expect(checkCreditsSorted(table("assets/a.ogg", "assets/b.ogg"))).toEqual(
+			[],
+		);
+	});
+
+	it("rejects rows out of order and names both paths", () => {
+		const errors = checkCreditsSorted(table("assets/b.ogg", "assets/a.ogg"));
+		expect(errors).toHaveLength(1);
+		expect(errors[0]).toContain(
+			"`assets/a.ogg` must come before `assets/b.ogg`",
+		);
+	});
+
+	it("checks each table on its own", () => {
+		const two = `${table("assets/z.ogg")}\n\n${table("assets/a.ogg")}`;
+		expect(checkCreditsSorted(two)).toEqual([]);
 	});
 });
 

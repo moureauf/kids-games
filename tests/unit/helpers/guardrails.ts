@@ -202,3 +202,24 @@ export async function checkFactFiles(
 	}
 	return { files, errors };
 }
+
+/**
+ * Rows in each CREDITS.md table must be sorted by their first path, so that
+ * parallel PRs add rows in different places and do not conflict.
+ */
+export function checkCreditsSorted(markdown: string): string[] {
+	const errors: string[] = [];
+	let previous: CreditRow | undefined;
+	for (const row of parseCredits(markdown)) {
+		const sameTable = previous !== undefined && row.line === previous.line + 1;
+		const key = row.patterns[0] ?? "";
+		const previousKey = previous?.patterns[0] ?? "";
+		if (sameTable && key < previousKey) {
+			errors.push(
+				`CREDITS.md line ${row.line}: \`${key}\` must come before \`${previousKey}\` (keep rows sorted by file path)`,
+			);
+		}
+		previous = row;
+	}
+	return errors;
+}
