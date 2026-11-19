@@ -1,7 +1,7 @@
 # kids-games
 
-Educational browser games for two young children (a 4-year-old starting
-Reception, and a child of almost 2). iPad first. Public repo, deployed to
+Educational browser games for young children: toddlers (about 1–3) and
+pre-schoolers (about 3–5). iPad first. Public repo, deployed to
 GitHub Pages at https://francoismoureau.com/kids-games/.
 
 Every session must obey this file. If a request conflicts with a rule here,
@@ -16,11 +16,11 @@ stop and ask.
   items or taps, never a clock. Then the game ends calmly (the fairy goes to
   sleep, the safari bus goes home). Never start a new round on its own.
 - **Praise the effort.** A wrong answer gets a gentle hint, never a penalty,
-  a buzzer, lost points or a score. Games for the toddler have no failure
+  a buzzer, lost points or a score. Games for toddlers have no failure
   states at all.
 - **Teach a real skill.** Each game trains phonics, letter formation,
   counting, vocabulary, French, or facts.
-- **Match the school (Read Write Inc. style).** Print letters, a start dot,
+- **Match UK phonics teaching (Read Write Inc. style).** Print letters, a start dot,
   correct stroke order, pure sounds ("mmm", not "muh"). Letter order follows
   RWI Set 1: m a s d t i n p g o c k u b f e l h r j v y w z q x. Numbers
   follow the EYFS goals: to 10, then to 20.

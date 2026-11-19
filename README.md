@@ -30,8 +30,8 @@ The games are for the iPad first. They work offline after the first visit.
 
 | Game | For | Skill | Status |
 |---|---|---|---|
-| **Sound safari:** tap an animal, a vehicle or a dinosaur. It moves, makes its sound, and a voice says its name. | Age 2 | Vocabulary, cause and effect | First scene playable |
-| **Unicorn letter trail:** trace a letter with a finger. The unicorn leaves a rainbow on the path. | Age 4 | Letter formation | Letter data done |
+| **Sound safari:** tap an animal, a vehicle or a dinosaur. It moves, makes its sound, and a voice says its name. | Toddlers | Vocabulary, cause and effect | First scene playable |
+| **Unicorn letter trail:** trace a letter with a finger. The unicorn leaves a rainbow on the path. | Pre-schoolers | Letter formation | Letter data done |
 
 More games and their plans are in [docs/GAMES.md](docs/GAMES.md).
 
