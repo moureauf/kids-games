@@ -78,12 +78,25 @@ Run **`/next-issue`** (or `/next-issue <n>`). The skill in
   **Never push to main. Never merge a PR.** A hook and branch protection
   enforce both.
 - `npm run verify` passes before the PR is opened.
-- The PR has an iPad screenshot, new assets in `CREDITS.md`, and one new
-  idea in `IDEAS.md`.
+- The PR has an iPad screenshot, new assets in `CREDITS.md` (rows sorted by
+  path), and one new idea as a new file in `ideas/` (see `IDEAS.md`).
 - Skip issues labelled `needs:owner` or `blocked`. If an issue needs the
   owner partway through (a download, a decision, a test on the real iPad),
   stop, add `needs:owner` with a comment saying exactly what is needed, and
   end the session.
+
+## Documentation
+
+Read these when you need more than this file:
+
+- `CONTRIBUTING.md`: install, workflow, tests, stacked PRs, troubleshooting.
+- `docs/ARCHITECTURE.md`: code layout, game contract, offline, CI.
+- `docs/DESIGN.md`: design principles, hints, colours, touch sizes.
+- `docs/GAMES.md`: each game, its plan and status.
+
+Write documentation in ASD-STE100 Simplified Technical English (rules in
+`CONTRIBUTING.md`, Writing style). When a PR changes a game visibly, update
+`docs/GAMES.md` (status, screenshot, "How it plays").
 
 ## Parallel sessions
 

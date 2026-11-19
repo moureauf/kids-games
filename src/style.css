@@ -120,14 +120,15 @@ body {
 }
 
 /* The ring fills while the button is held. */
-.home-button .home-ring {
+.home-button .hold-ring,
+.parent-gate .hold-ring {
 	position: absolute;
 	inset: 0;
 	transform: rotate(-90deg);
 	pointer-events: none;
 }
 
-.home-ring circle {
+.hold-ring circle {
 	fill: none;
 	stroke: var(--accent);
 	stroke-width: 8;
@@ -136,9 +137,142 @@ body {
 	stroke-dashoffset: 100;
 }
 
-.home-button.holding .home-ring circle {
+.holding .hold-ring circle {
 	stroke-dashoffset: 0;
 	transition: stroke-dashoffset var(--hold-ms, 1000ms) linear;
+}
+
+/* Parent gate: a quiet cog in the hub's corner. Big enough to hold, but
+   faded so it does not invite a child's tap. */
+.parent-gate {
+	position: fixed;
+	top: calc(env(safe-area-inset-top) + 8px);
+	right: calc(env(safe-area-inset-right) + 8px);
+	width: 88px;
+	height: 88px;
+	padding: 22px;
+	border: none;
+	border-radius: 50%;
+	background: transparent;
+	-webkit-tap-highlight-color: transparent;
+	touch-action: none;
+}
+
+.parent-gate svg {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.parent-gate .gate-icon {
+	opacity: 0.3;
+}
+
+.parent-gate.holding .gate-icon {
+	opacity: 0.6;
+}
+
+/* Settings panel: for grown-ups, plain readable text. */
+.settings-panel {
+	width: min(90vw, 560px);
+	padding: 2rem;
+	border: none;
+	border-radius: 24px;
+	color: var(--ink);
+	background: #ffffff;
+	box-shadow: 0 12px 40px rgb(43 33 64 / 0.25);
+	-webkit-user-select: text;
+	user-select: text;
+}
+
+.settings-panel::backdrop {
+	background: rgb(43 33 64 / 0.4);
+}
+
+.settings-panel h2 {
+	margin: 0 0 0.25rem;
+	font-size: 2rem;
+}
+
+.settings-note {
+	margin: 0 0 1.5rem;
+	font-size: 1.1rem;
+}
+
+.setting {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1.5rem;
+	padding: 1rem 0;
+	border-top: 2px solid #f1e6d2;
+	border-bottom: 2px solid #f1e6d2;
+}
+
+.setting-text {
+	display: grid;
+	gap: 0.25rem;
+}
+
+.setting-label {
+	font-size: 1.4rem;
+	font-weight: 700;
+}
+
+.setting-hint {
+	font-size: 1rem;
+}
+
+.switch {
+	flex: none;
+	position: relative;
+	width: 104px;
+	height: 56px;
+	border: 3px solid var(--ink);
+	border-radius: 28px;
+	background: #e8e2d6;
+	-webkit-tap-highlight-color: transparent;
+}
+
+.switch-knob {
+	position: absolute;
+	top: 4px;
+	left: 4px;
+	width: 42px;
+	height: 42px;
+	border-radius: 50%;
+	background: #ffffff;
+	box-shadow: 0 2px 0 rgb(43 33 64 / 0.3);
+	transition: transform 150ms ease;
+}
+
+.switch[aria-checked="true"] {
+	background: #5cc8a8;
+}
+
+.switch[aria-checked="true"] .switch-knob {
+	transform: translateX(48px);
+}
+
+.switch:focus-visible,
+.settings-done:focus-visible,
+.parent-gate:focus-visible {
+	outline: 4px solid #6f8cff;
+	outline-offset: 3px;
+}
+
+.settings-done {
+	display: block;
+	width: 100%;
+	min-height: 88px;
+	margin-top: 1.5rem;
+	border: none;
+	border-radius: 20px;
+	font: inherit;
+	font-size: 1.6rem;
+	font-weight: 700;
+	color: #ffffff;
+	background: var(--ink);
 }
 
 /* End of round: calm, no score, no auto-restart. */

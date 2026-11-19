@@ -13,7 +13,8 @@
 		"e2e": "playwright test",
 		"shots": "playwright test --project=ipad-webkit --grep @shot",
 		"icons": "pwa-assets-generator",
-		"verify": "npm run lint && npm run typecheck && npm test && npm run e2e"
+		"verify": "npm run lint && npm run typecheck && npm test && npm run e2e",
+		"ideas": "node scripts/ideas.ts"
 	},
 	"license": "MIT",
 	"type": "module",

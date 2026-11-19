@@ -41,6 +41,22 @@ test("works offline after the first load @shot", async ({
 	await expect
 		.poll(async () => (await spoken(page)).map((s) => s.text))
 		.toEqual(creatures.map((c) => c.en));
+
+	// Settings open behind the parent gate and save offline.
+	await page.goto("./?e2e&gateMs=200#/");
+	const french = page.getByRole("switch", { name: "French words" });
+	const openSettings = async () => {
+		await page.getByRole("button", { name: /^Settings for grown-ups/ }).hover();
+		await page.mouse.down();
+		await expect(french).toBeVisible();
+		await page.mouse.up();
+	};
+	await openSettings();
+	await french.click();
+	await page.getByRole("button", { name: "Done" }).click();
+	await page.reload();
+	await openSettings();
+	await expect(french).toHaveAttribute("aria-checked", "true");
 });
 
 test("is installable on the iPad", async ({ page, request }) => {
