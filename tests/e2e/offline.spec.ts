@@ -18,6 +18,14 @@ test("works offline after the first load @shot", async ({
 	await page.screenshot({
 		path: `screenshots/${testInfo.project.name}/hub-offline.png`,
 	});
+
+	// Every route still works offline: a game, its end screen, and home.
+	await page.goto("./?e2e#/");
+	await page.getByRole("link", { name: "Test game" }).click();
+	await page.getByRole("button", { name: "Finish" }).click();
+	await expect(page.getByText("Well done for trying!")).toBeVisible();
+	await page.getByRole("button", { name: "Home" }).click();
+	await expect(page.getByRole("link", { name: "Test game" })).toBeVisible();
 });
 
 test("is installable on the iPad", async ({ page, request }) => {
