@@ -1,6 +1,6 @@
 ---
 date: 2026-11-19
-for: Son
+for: Toddler
 skill: Counting, sharing equally
 ---
 

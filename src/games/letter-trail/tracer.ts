@@ -51,7 +51,7 @@ export interface LetterResult {
 }
 
 /**
- * All tolerances, in x-height units unless noted. Tuned for a 4-year-old's
+ * All tolerances, in x-height units unless noted. Tuned for a pre-schooler's
  * finger on an iPad: at the planned letter size (x-height about 250 CSS px)
  * 0.35 units is about one 88 px touch target.
  */

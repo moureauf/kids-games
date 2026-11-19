@@ -7,12 +7,12 @@ This document explains the design rules of kids-games and the visual style.
 
 | Player | Age | Likes | Needs |
 |---|---|---|---|
-| Older child | 4. Starts Reception in September 2027. | Unicorns, fairies, princesses, magic creatures to collect, silly inventions | Phonics, print letter formation, numbers to 10 and then 20 |
-| Younger child | Almost 2 | Animals, vehicles, dinosaurs and their sounds | Cause and effect, large targets, no failure states |
+| Pre-schooler | About 3 to 5 | Unicorns, fairies, princesses, magic creatures to collect, silly inventions | Phonics, print letter formation, numbers to 10 and then 20 |
+| Toddler | About 1 to 3 | Animals, vehicles, dinosaurs and their sounds | Cause and effect, large targets, no failure states |
 | Parent | Adult | | Settings behind a gate, a clear end to each round |
 
-> **Privacy:** Do not write the names of the children in the repo. Do not
-> add their photos or voices. Data that a parent enters on the iPad stays on
+> **Privacy:** Do not write personal details of the players in the repo:
+> no names, ages, schools, photos or voices. Data that a parent enters on the iPad stays on
 > the iPad.
 
 ## Principles
@@ -22,7 +22,7 @@ This document explains the design rules of kids-games and the visual style.
 | 1 | **Teach, do not hook** | Each game trains one real skill. No streaks, loot boxes, timers, endless rewards, ads, tracking or accounts. | Review. No network calls in the code. |
 | 2 | **A natural end** | A round is 5 to 10 minutes, counted in items or taps. Then the game stops calmly: the fairy sleeps, the bus goes home. | e2e test reaches the end screen. |
 | 3 | **Praise the effort** | A wrong answer gets a gentle hint. No penalty, no buzzer, no lost points, no score. | e2e tests for hints. |
-| 4 | **Match the school** | Print letters with a start dot and the correct stroke order. Pure sounds ("mmm", not "muh"). Numbers follow the EYFS goals. | Unit tests on letter data. |
+| 4 | **Match UK phonics teaching** | Print letters with a start dot and the correct stroke order. Pure sounds ("mmm", not "muh"). Numbers follow the EYFS goals. | Unit tests on letter data. |
 | 5 | **Two languages** | English first. A setting adds French words, with the article ("la vache"). | e2e test of EN, then FR. |
 | 6 | **Correct facts only** | Each fact has an `https` source in its data file. | Guardrail unit test. |
 | 7 | **Original art** | Themes that the children like, but no brand characters and no copies of their look. | Review. `CREDITS.md` and its test. |
@@ -86,7 +86,7 @@ more.
 
 | Item | Minimum size |
 |---|---|
-| Targets in games for the younger child | 120 CSS px |
+| Targets in games for toddlers | 120 CSS px |
 | Other targets | 88 CSS px |
 | Home button | 120 CSS px, 1 s hold to go home |
 | Gap between targets | 24 CSS px |

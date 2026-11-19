@@ -8,13 +8,13 @@ To add an idea for a new game, read [IDEAS.md](../IDEAS.md).
 
 | # | Game | For | Skill | Status |
 |---|---|---|---|---|
-| 1 | [Sound safari](#1-sound-safari) | Younger child | Vocabulary, cause and effect | Playable: first scene. No round end yet ([#9](https://github.com/moureauf/kids-games/issues/9)). |
-| 2 | [Unicorn letter trail](#2-unicorn-letter-trail) | Older child | Letter formation | In progress: letter data done, tracing checker in review ([#43](https://github.com/moureauf/kids-games/pull/43)) |
-| 3 | Fairy garden | Older child | Counting, first sounds | Idea |
+| 1 | [Sound safari](#1-sound-safari) | Toddler | Vocabulary, cause and effect | Playable: first scene. No round end yet ([#9](https://github.com/moureauf/kids-games/issues/9)). |
+| 2 | [Unicorn letter trail](#2-unicorn-letter-trail) | Pre-schooler | Letter formation | In progress: letter data done, tracing checker in review ([#43](https://github.com/moureauf/kids-games/pull/43)) |
+| 3 | Fairy garden | Pre-schooler | Counting, first sounds | Idea |
 | 4 | Dino dig | Both | Facts, vocabulary | Idea |
-| 5 | Silly inventions | Older child | Sequencing, logic | Idea |
-| 6 | Royal tea party | Older child | Counting, sharing | Idea |
-| 7 | Printables | Older child | Writing practice on paper | Idea |
+| 5 | Silly inventions | Pre-schooler | Sequencing, logic | Idea |
+| 6 | Royal tea party | Pre-schooler | Counting, sharing | Idea |
+| 7 | Printables | Pre-schooler | Writing practice on paper | Idea |
 
 Status values: **Idea** (no issues yet), **Planned** (issues exist),
 **In progress** (some PRs merged), **Playable** (on the site),
@@ -33,7 +33,7 @@ All games use the same hub, home button and end screen.
 
 | Item | Value |
 |---|---|
-| For | The younger child (almost 2) |
+| For | Toddlers |
 | Skill | Vocabulary, cause and effect |
 | Languages | English name, then the French name with its article when French is on |
 | Round | About 20 taps, in three scenes: farm, road, dino valley |
@@ -83,7 +83,7 @@ home button.
 
 | Item | Value |
 |---|---|
-| For | The older child (4) |
+| For | Pre-schoolers |
 | Skill | Print letter formation: start dot, stroke order, direction |
 | Languages | English. French letter names and words when French is on. |
 | Round | 5 letters, in RWI Set 1 order. The next round continues from the last letter. |

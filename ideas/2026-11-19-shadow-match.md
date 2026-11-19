@@ -1,6 +1,6 @@
 ---
 date: 2026-11-19
-for: Son (later both)
+for: Toddler (later both)
 skill: Shape matching, vocabulary
 ---
 

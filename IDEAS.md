@@ -11,7 +11,7 @@ Each build session adds **one new idea** that obeys the design rules in
    ```markdown
    ---
    date: 2026-11-19
-   for: Daughter | Son | Both
+   for: Pre-schooler | Toddler | Both
    skill: Counting, number order
    ---
 

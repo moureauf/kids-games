@@ -112,7 +112,7 @@ These rules come from [CLAUDE.md](CLAUDE.md) and
 | Teaching | Each game teaches one real skill. |
 | Rounds | Each round has a natural end. Do not use timers, streaks, scores or endless rewards. |
 | Mistakes | Give a gentle hint. Do not give a penalty or a failure sound. |
-| Touch | Make targets 120 CSS px or more for the toddler, 88 px or more for others. |
+| Touch | Make targets 120 CSS px or more in toddler games, 88 px or more for others. |
 | Offline | Every game works offline. Add each new game or screen to `tests/e2e/offline.spec.ts`. |
 | Privacy | Do not put the children's names, photos or voices in the repo, the issues or the PRs. |
 | Assets | Use only CC0 files or original art. Add each file to `CREDITS.md`. |
