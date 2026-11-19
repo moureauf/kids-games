@@ -85,6 +85,19 @@ Run **`/next-issue`** (or `/next-issue <n>`). The skill in
   stop, add `needs:owner` with a comment saying exactly what is needed, and
   end the session.
 
+## Parallel sessions
+
+Several sessions can run at once:
+
+- Start each with `claude --worktree` (its own checkout under
+  `.claude/worktrees/`, git-ignored), then `/next-issue`.
+- `scripts/claim-issue.sh` makes sure two sessions never take the same
+  issue (claim comment + `in-progress` label).
+- e2e tests use a port derived from the checkout path (override with
+  `PORT`) and never reuse a running server, so sessions never test each
+  other's build.
+- `scripts/pr-screenshot.sh` retries when another session uploaded first.
+
 ## Commands
 
 | Command | What |
@@ -94,7 +107,7 @@ Run **`/next-issue`** (or `/next-issue <n>`). The skill in
 | `npm run lint` / `npm run format` | Biome check / fix |
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm test` | Vitest unit tests (`tests/unit/`) |
-| `npm run e2e` | Playwright on iPad viewports, against the production build |
+| `npm run e2e` | Playwright on iPad viewports, against the production build (own port per checkout) |
 | `npm run shots` | Screenshot tests tagged `@shot` into `screenshots/` |
 | `npm run verify` | Lint, types, unit and e2e: run before every PR |
 | `npm run icons` | Regenerate PNG icons from `public/assets/icons/icon.svg` |
