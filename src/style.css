@@ -306,3 +306,212 @@ body {
 	border-radius: 50%;
 	background: #ffffff;
 }
+
+/* Sound safari: a meadow scene with six big tappable creatures. */
+.safari {
+	--size: clamp(130px, min(22vw, 27vh), 240px);
+	position: relative;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	background: #6ccfac;
+}
+
+.safari-sky {
+	position: absolute;
+	inset: 0 0 50% 0;
+	background: linear-gradient(#a9bcff, #e3eaff);
+}
+
+.safari-land {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.safari-sun {
+	position: absolute;
+	top: 3%;
+	right: 4%;
+	width: min(16vw, 16vh);
+	height: auto;
+}
+
+.safari-clouds .safari-cloud {
+	position: absolute;
+	width: min(20vw, 20vh);
+	height: auto;
+}
+
+.safari-clouds .safari-cloud:first-child {
+	top: 8%;
+	left: 24%;
+}
+
+.safari-clouds .safari-cloud:last-child {
+	top: 16%;
+	left: 56%;
+	width: min(14vw, 14vh);
+}
+
+.safari-flower-spot {
+	position: absolute;
+	left: var(--x);
+	top: var(--y);
+	width: min(4vw, 4vh);
+	transform: translate(-50%, -100%);
+	pointer-events: none;
+}
+
+.safari-flower-spot svg {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.safari svg {
+	pointer-events: none;
+}
+
+.creature {
+	position: absolute;
+	left: calc(var(--x) - var(--size) / 2);
+	top: calc(var(--y) - var(--size) * 0.9);
+	width: var(--size);
+	height: var(--size);
+	padding: 0;
+	border: none;
+	border-radius: 24px;
+	background: none;
+	-webkit-tap-highlight-color: transparent;
+	touch-action: none;
+}
+
+.creature:focus-visible {
+	outline: 6px solid #6f8cff;
+}
+
+.creature svg {
+	display: block;
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+.creature .shadow {
+	fill: #2b2140;
+	opacity: 0.14;
+}
+
+.creature .figure {
+	transform-box: view-box;
+	transform-origin: 100px 180px;
+}
+
+.creature .wheel {
+	transform-box: fill-box;
+	transform-origin: center;
+}
+
+.creature.anim-bounce .figure {
+	animation: safari-bounce 700ms ease-out;
+}
+
+.creature.anim-wiggle .figure {
+	animation: safari-wiggle 700ms ease-in-out;
+}
+
+.creature.anim-drive .figure {
+	animation: safari-drive 1000ms ease-in-out;
+}
+
+.creature.anim-drive .wheel {
+	animation: safari-spin 500ms linear 2;
+}
+
+.creature.anim-stomp .figure {
+	animation: safari-stomp 800ms ease-in-out;
+}
+
+@keyframes safari-bounce {
+	15% {
+		transform: scale(1.1, 0.88);
+	}
+	40% {
+		transform: translateY(-42px) scale(0.94, 1.08);
+	}
+	65% {
+		transform: scale(1.08, 0.92);
+	}
+	82% {
+		transform: translateY(-10px);
+	}
+}
+
+@keyframes safari-wiggle {
+	20% {
+		transform: rotate(-8deg);
+	}
+	40% {
+		transform: rotate(8deg);
+	}
+	60% {
+		transform: rotate(-6deg);
+	}
+	80% {
+		transform: rotate(4deg);
+	}
+}
+
+@keyframes safari-drive {
+	10% {
+		transform: translateY(-3px);
+	}
+	45% {
+		transform: translateX(26px);
+	}
+	55% {
+		transform: translateX(26px) translateY(-3px);
+	}
+	90% {
+		transform: translateX(-4px);
+	}
+}
+
+@keyframes safari-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes safari-stomp {
+	20% {
+		transform: rotate(-6deg) translateY(-8px);
+	}
+	40% {
+		transform: scale(1.04, 0.96);
+	}
+	60% {
+		transform: rotate(-6deg) translateY(-8px);
+	}
+	80% {
+		transform: scale(1.04, 0.96);
+	}
+}
+
+/* Reduced motion: no movement, only a soft fade; the name is still said. */
+@media (prefers-reduced-motion: reduce) {
+	.creature[class*="anim-"] .figure {
+		animation: safari-glow 600ms ease-in-out;
+	}
+	.creature[class*="anim-"] .wheel {
+		animation: none;
+	}
+}
+
+@keyframes safari-glow {
+	50% {
+		opacity: 0.7;
+	}
+}

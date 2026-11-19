@@ -1,56 +1,44 @@
-import { readFileSync } from "node:fs";
-import { stripTypeScriptTypes } from "node:module";
-import { expect, type Page, test } from "@playwright/test";
-import type { Lang } from "../../src/core/speech";
+import { expect, test } from "@playwright/test";
 import { installSpeechStub, spoken } from "./helpers/speech-stub";
 
-declare global {
-	interface Window {
-		__speechUnderTest?: {
-			say: (text: string, lang?: Lang) => Promise<void>;
-			sayAll: (items: { text: string; lang: Lang }[]) => Promise<void>;
-		};
-	}
-}
+// Speech in the real built page, through Sound safari: the English name of
+// a tapped creature uses an English (en-GB) voice.
 
-// No game uses speech yet, so the test loads src/core/speech.ts into the
-// built page itself. Nothing extra ships to users.
-const speechModule = `${stripTypeScriptTypes(
-	readFileSync(new URL("../../src/core/speech.ts", import.meta.url), "utf8"),
-)}
-window.__speechUnderTest = { say, sayAll };`;
-
-async function loadSpeech(page: Page) {
-	await page.goto("./");
-	await page.addScriptTag({ content: speechModule, type: "module" });
-	await page.waitForFunction(() => window.__speechUnderTest !== undefined);
-}
-
-test("names a word in English, then in French", async ({ page }) => {
+test("says a creature's name with the en-GB voice", async ({ page }) => {
 	await installSpeechStub(page);
-	await loadSpeech(page);
+	await page.goto("./#/sound-safari");
 
-	await page.evaluate(() =>
-		window.__speechUnderTest?.sayAll([
-			{ text: "the cow", lang: "en" },
-			{ text: "la vache", lang: "fr" },
-		]),
-	);
+	await page.getByRole("button", { name: "Cow" }).tap();
 
-	expect(await spoken(page)).toEqual([
-		{ text: "the cow", lang: "en-GB" },
-		{ text: "la vache", lang: "fr-FR" },
-	]);
+	await expect
+		.poll(() => spoken(page))
+		.toEqual([{ text: "cow", lang: "en-GB" }]);
+});
+
+test("stays silent, not French-accented, with only a French voice", async ({
+	page,
+}) => {
+	await installSpeechStub(page, { voices: ["fr-FR"] });
+	await page.goto("./#/sound-safari");
+	const cow = page.getByRole("button", { name: "Cow" });
+	await cow.tap();
+	await expect(cow).toHaveClass(/anim-wiggle/);
+	await page.waitForTimeout(300);
+	expect(await spoken(page)).toEqual([]);
 });
 
 test("keeps working when no voices are installed", async ({ page }) => {
 	const errors: Error[] = [];
 	page.on("pageerror", (e) => errors.push(e));
 	await installSpeechStub(page, { voices: [] });
-	await loadSpeech(page);
+	await page.goto("./#/sound-safari");
 
-	await page.evaluate(() => window.__speechUnderTest?.say("hello"));
-
-	await expect(page.getByRole("heading", { name: "Kids games" })).toBeVisible();
+	const dino = page.getByRole("button", { name: "Dinosaur" });
+	await dino.tap();
+	await expect(dino).toHaveClass(/anim-stomp/);
+	await page.getByRole("button", { name: "Pig" }).tap();
+	await expect(page.getByRole("button", { name: "Pig" })).toHaveClass(
+		/anim-bounce/,
+	);
 	expect(errors).toEqual([]);
 });

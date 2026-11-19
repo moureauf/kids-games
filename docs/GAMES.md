@@ -8,7 +8,7 @@ To add an idea for a new game, read [IDEAS.md](../IDEAS.md).
 
 | # | Game | For | Skill | Status |
 |---|---|---|---|---|
-| 1 | [Sound safari](#1-sound-safari) | Younger child | Vocabulary, cause and effect | In progress: first scene in review ([#42](https://github.com/moureauf/kids-games/pull/42)) |
+| 1 | [Sound safari](#1-sound-safari) | Younger child | Vocabulary, cause and effect | Playable: first scene. No round end yet ([#9](https://github.com/moureauf/kids-games/issues/9)). |
 | 2 | [Unicorn letter trail](#2-unicorn-letter-trail) | Older child | Letter formation | In progress: letter data done, tracing checker in review ([#43](https://github.com/moureauf/kids-games/pull/43)) |
 | 3 | Fairy garden | Older child | Counting, first sounds | Idea |
 | 4 | Dino dig | Both | Facts, vocabulary | Idea |
@@ -26,10 +26,8 @@ All games use the same hub, home button and end screen.
 
 | Hub | Home button in a game | End screen |
 |---|---|---|
-| ![Hub with one game tile](images/hub.png) | ![Home button in the top-left corner](images/game-view.png) | ![Sleeping moon and "Well done for trying!"](images/end-screen.png) |
-| One large picture tile for each game. The child does not need to read. | Hold the button for 1 s to go home. A ring fills during the hold. A short tap does nothing. | Shows at the end of each round. Tap home to leave. The game does not start again by itself. |
-
-> The hub image shows the test tile. The real game tiles come with the games.
+| ![Hub with the Sound safari tile and the settings cog](images/hub.png) | ![Home button in the top-left corner](images/game-view.png) | ![Sleeping moon and "Well done for trying!"](images/end-screen.png) |
+| One large picture tile for each game. The child does not need to read. The grey cog opens the settings after a 3 s hold. | Hold the button for 1 s to go home. A ring fills during the hold. A short tap does nothing. | Shows at the end of each round. Tap home to leave. The game does not start again by itself. |
 
 ## 1. Sound safari
 
@@ -65,13 +63,17 @@ stateDiagram-v2
 
 ### Screenshot
 
-The first scene comes with [#6](https://github.com/moureauf/kids-games/issues/6).
+![The meadow: a sheep, a dinosaur, a cow, a duck, a pig and a tractor](images/sound-safari.png)
+
+Today the game has one scene. Each tap makes the creature move, and a voice
+says its English name. The game has no end yet: the child goes home with the
+home button.
 
 ### Plan
 
 | Issue | Work | Status |
 |---|---|---|
-| [#6](https://github.com/moureauf/kids-games/issues/6) | Scene with 6 creatures, English name | In review: [#42](https://github.com/moureauf/kids-games/pull/42) |
+| [#6](https://github.com/moureauf/kids-games/issues/6) | Scene with 6 creatures, English name | Done |
 | [#7](https://github.com/moureauf/kids-games/issues/7) | Sounds (CC0 animals, code-made vehicles and dinosaurs) | Needs the owner: CC0 downloads |
 | [#8](https://github.com/moureauf/kids-games/issues/8) | French name after the English name | Open |
 | [#9](https://github.com/moureauf/kids-games/issues/9) | Natural end: the bus goes home | Open |

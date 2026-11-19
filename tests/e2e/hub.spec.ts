@@ -16,6 +16,7 @@ test("hub loads @shot", async ({ page }, testInfo) => {
 	await page.goto("./?e2e");
 	await expect(page.getByRole("heading", { name: "Kids games" })).toBeVisible();
 	await expect(page.getByRole("link", { name: "Test game" })).toBeVisible();
+	await expect(page.getByRole("link", { name: "Sound safari" })).toBeVisible();
 	await page.screenshot({
 		path: `screenshots/${testInfo.project.name}/hub.png`,
 	});
