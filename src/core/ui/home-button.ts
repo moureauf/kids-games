@@ -1,6 +1,7 @@
 // The shared home button shown in the corner of every game. It only works
 // after a short hold, so a stray tap from a toddler does not end the game.
 // A ring fills while the finger stays down; lifting early does nothing.
+import { holdRingSvg, makeHoldButton } from "./hold";
 
 export const HOME_HOLD_MS = 1000;
 
@@ -19,38 +20,7 @@ export function createHomeButton(
 	button.type = "button";
 	button.className = "home-button";
 	button.setAttribute("aria-label", "Home (hold)");
-	button.style.setProperty("--hold-ms", `${holdMs}ms`);
-	button.innerHTML = `
-		<svg class="home-ring" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
-			<circle cx="50" cy="50" r="45" pathLength="100" />
-		</svg>
-		${houseSvg}`;
-
-	let timer: ReturnType<typeof setTimeout> | undefined;
-
-	const cancel = () => {
-		if (timer !== undefined) clearTimeout(timer);
-		timer = undefined;
-		button.classList.remove("holding");
-	};
-
-	button.addEventListener("pointerdown", (event) => {
-		if (!event.isPrimary) return;
-		event.preventDefault();
-		cancel();
-		button.setPointerCapture?.(event.pointerId);
-		button.classList.add("holding");
-		timer = setTimeout(() => {
-			timer = undefined;
-			button.classList.remove("holding");
-			onHome();
-		}, holdMs);
-	});
-	for (const type of ["pointerup", "pointercancel", "lostpointercapture"]) {
-		button.addEventListener(type, cancel);
-	}
-	// No long-press menu on iPad.
-	button.addEventListener("contextmenu", (event) => event.preventDefault());
-
+	button.innerHTML = `${holdRingSvg}${houseSvg}`;
+	makeHoldButton(button, holdMs, onHome);
 	return button;
 }
