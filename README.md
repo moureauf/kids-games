@@ -13,7 +13,7 @@ The games are for the iPad first. They work offline after the first visit.
 
 | Hub | In a game | End of a round |
 |---|---|---|
-| ![The hub with the Sound safari tile](docs/images/hub.png) | ![A game with the home button in the corner](docs/images/game-view.png) | ![The end screen: a sleeping moon and "Well done for trying!"](docs/images/end-screen.png) |
+| ![The hub with the Sound safari and Unicorn letter trail tiles](docs/images/hub.png) | ![A game with the home button in the corner](docs/images/game-view.png) | ![The end screen: a sleeping moon and "Well done for trying!"](docs/images/end-screen.png) |
 
 ## What it is
 
@@ -31,7 +31,7 @@ The games are for the iPad first. They work offline after the first visit.
 | Game | For | Skill | Status |
 |---|---|---|---|
 | **Sound safari:** tap an animal, a vehicle or a dinosaur. It moves, makes its sound, and a voice says its name. | Age 2 | Vocabulary, cause and effect | First scene playable |
-| **Unicorn letter trail:** trace a letter with a finger. The unicorn leaves a rainbow on the path. | Age 4 | Letter formation | Letter data done |
+| **Unicorn letter trail:** trace a letter with a finger. The unicorn leaves a rainbow on the path. | Age 4 | Letter formation | One letter playable |
 
 More games and their plans are in [docs/GAMES.md](docs/GAMES.md).
 
