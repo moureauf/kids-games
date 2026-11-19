@@ -1,16 +1,30 @@
 # Ideas
 
-One new idea per build session. Every idea must obey the design rules in
-`CLAUDE.md` (teach a real skill, natural end, no hooks, original art).
-Reviewed once a month.
+Each build session adds **one new idea** that obeys the design rules in
+[`CLAUDE.md`](CLAUDE.md).
 
-| Date | Idea | For | Skill |
-|---|---|---|---|
-| 2026-11-18 | **Bedtime star map:** join stars numbered 1 to 10 (later 1 to 20) to draw an original night creature. Each star says its number when tapped. A wrong star just twinkles and the next star glows. After 3 creatures the sky goes dark and they yawn. | Daughter | Counting, number order |
-| 2026-11-18 | **Puddle splash sounds:** tap a puddle and an original animal jumps in, splashes, and the pure first sound of its name plays ("sss" for a seal). Ten puddles, then the sun comes out and the puddles dry up. | Both | Phonics (initial sounds), cause and effect |
-| 2026-11-19 | **Moon shapes:** the moon goes from new to full over a short story; tap the shape that matches tonight's moon (circle, half, crescent). Then the owl says goodnight and the screen dims. Uses real moon phase names from a sourced data file. | Daughter | Shapes, facts, vocabulary |
-| 2026-11-19 | **Bug hotel:** fill an original bug hotel room by room; each room asks for a real minibeast fact ("Which one has six legs?") and the answer bug crawls in. Facts come from a sourced data file. After 8 rooms the hotel lights go out and the bugs sleep. | Daughter | Facts, counting legs, vocabulary |
-| 2026-11-19 | **Sock sorting line:** a washing line with original odd socks (stripes, spots, stars). Drag each sock to its matching pair; a matched pair says its pattern and colour ("two spotty blue socks"). A wrong sock gently swings back. After 8 pairs the basket is empty and the line goes still. | Both | Matching, pairs, colour and pattern vocabulary |
-| 2026-11-19 | **Echo cave:** tap an original cave creature and it says a word in English, then the cave echoes it back in French ("the bat ... la chauve-souris"). The child taps the matching picture to wake the next creature. Eight creatures, then the cave lights dim and they all curl up to sleep. | Both | French vocabulary, listening |
-| 2026-11-19 | **Snail slime letters:** a friendly snail waits on the start dot of a big letter; the child drags it along the letter and it leaves a shiny trail in the right direction. Going the wrong way, the snail just turns to look back at the arrow. Five letters, then the snail curls into its shell for a nap. | Daughter | Letter formation (start dot, direction) |
-| 2026-11-19 | **Shadow match:** an original animal hides behind a bush and only its shadow shows; three animals wait at the side, and the child drags the one whose shape fits. A good match pops out and is named (EN, then FR). Six shadows, then the sun sets and the shadows stretch long and fade. | Son (later both) | Shape matching, vocabulary |
+## Add an idea
+
+1. Make a new file `ideas/<yyyy-mm-dd>-<slug>.md`. Do not edit other files.
+2. Use this format:
+
+   ```markdown
+   ---
+   date: 2026-11-19
+   for: Daughter | Son | Both
+   skill: Counting, number order
+   ---
+
+   # Short title
+
+   One paragraph: how the game plays, the skill it teaches, and its natural end.
+   ```
+
+3. Run `npm test`. A unit test checks every idea file.
+
+One file per idea means that parallel PRs never change the same line.
+
+## Review the ideas
+
+Run `npm run ideas`. The command shows all ideas in one table. Review them
+one time each month.
