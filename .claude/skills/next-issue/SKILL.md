@@ -69,6 +69,17 @@ npm run verify
 All of lint, types, unit and e2e must pass. If something fails, find the
 cause before changing code. Do not weaken or skip a test to make it pass.
 
+Then check the size (add `-- <base>` for a stacked branch):
+
+```sh
+npm run pr-size
+```
+
+It counts changed lines without tests, lockfiles and binary files:
+`size:S` 250 at most, `size:M` 500. If it fails, keep this PR inside the
+limit and move the rest into new issues (`gh issue create`, with `game:`
+and `size:` labels). Never relabel the issue yourself.
+
 ## 6. Screenshots
 
 ```sh
