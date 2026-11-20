@@ -9,7 +9,7 @@ To add an idea for a new game, read [IDEAS.md](../IDEAS.md).
 | # | Game | For | Skill | Status |
 |---|---|---|---|---|
 | 1 | [Sound safari](#1-sound-safari) | Toddler | Vocabulary, cause and effect | Playable: one scene, a round of 20 taps, then the bus goes home. |
-| 2 | [Unicorn letter trail](#2-unicorn-letter-trail) | Pre-schooler | Letter formation | In progress: letter data done, tracing checker in review ([#43](https://github.com/moureauf/kids-games/pull/43)) |
+| 2 | [Unicorn letter trail](#2-unicorn-letter-trail) | Pre-schooler | Letter formation | Playable: one letter ("a"). No round end yet ([#15](https://github.com/moureauf/kids-games/issues/15)). |
 | 3 | Fairy garden | Pre-schooler | Counting, first sounds | Idea |
 | 4 | Dino dig | Both | Facts, vocabulary | Idea |
 | 5 | Silly inventions | Pre-schooler | Sequencing, logic | Idea |
@@ -26,7 +26,7 @@ All games use the same hub, home button and end screen.
 
 | Hub | Home button in a game | End screen |
 |---|---|---|
-| ![Hub with the Sound safari tile and the settings cog](images/hub.png) | ![Home button in the top-left corner](images/game-view.png) | ![Sleeping moon and "Well done for trying!"](images/end-screen.png) |
+| ![Hub with the Sound safari and Unicorn letter trail tiles and the settings cog](images/hub.png) | ![Home button in the top-left corner](images/game-view.png) | ![Sleeping moon and "Well done for trying!"](images/end-screen.png) |
 | One large picture tile for each game. The child does not need to read. The grey cog opens the settings after a 3 s hold. | Hold the button for 1 s to go home. A ring fills during the hold. A short tap does nothing. | Shows at the end of each round. Tap home to leave. The game does not start again by itself. |
 
 ## 1. Sound safari
@@ -131,6 +131,32 @@ stateDiagram-v2
     EndScreen --> [*]
 ```
 
+### Screenshot
+
+![The letter a on guide lines: a rainbow covers the traced part of the bowl and the unicorn stands at the finger](images/letter-trail.png)
+
+Today the game shows one letter, "a". It works like this:
+
+1. The screen shows the grey letter between two guide lines: the x-height
+   line (dashed) and the baseline. The unicorn waits at the side.
+2. A small spark moves along each stroke one time. This shows the start
+   and the direction.
+3. The start dot of the next stroke pulses.
+4. The child traces with a finger. The unicorn follows the finger along
+   the stroke. A rainbow covers the part of the stroke that the finger
+   traced.
+5. When the finger lifts, the game checks the stroke. A good stroke keeps
+   its rainbow, and the start dot moves to the next stroke.
+6. If the stroke is not correct, the rainbow goes away and the start dot
+   pulses again. There is no sound and no penalty.
+7. When all strokes are good, the unicorn is happy and a voice says "What
+   careful tracing. Well done!".
+8. The game does not start a new letter. The child goes home with the home
+   button.
+
+With reduced motion, the spark does not move. Small arrows on the letter
+show the direction.
+
 ### Letter data (done)
 
 ![Letters L c o a e é with start dots, arrows and stroke numbers](images/letter-strokes.png)
@@ -143,8 +169,8 @@ The data and its coordinate system are in
 | Issue | Work | Status |
 |---|---|---|
 | [#11](https://github.com/moureauf/kids-games/issues/11) | Stroke data for L c o a e é | Done |
-| [#12](https://github.com/moureauf/kids-games/issues/12) | Tracing checker | In review: [#43](https://github.com/moureauf/kids-games/pull/43) |
-| [#13](https://github.com/moureauf/kids-games/issues/13) | Letter screen with unicorn and rainbow | Open, needs #12 |
+| [#12](https://github.com/moureauf/kids-games/issues/12) | Tracing checker | Done |
+| [#13](https://github.com/moureauf/kids-games/issues/13) | Letter screen with unicorn and rainbow | Done |
 | [#14](https://github.com/moureauf/kids-games/issues/14) | Gentle hints | Open |
 | [#15](https://github.com/moureauf/kids-games/issues/15) | Round of 5 letters, then the unicorn sleeps | Open |
 | [#16](https://github.com/moureauf/kids-games/issues/16) | Our own formation phrases | Open |

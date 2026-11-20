@@ -55,7 +55,8 @@ src/
   games/
     index.ts                Registry: the list of games
     test-game.ts            Test game, only with ?e2e in the URL
-    letter-trail/           Letter stroke data and geometry
+    letter-trail/           Letter screen, unicorn art, stroke data,
+                            geometry and tracing checker
 public/
   assets/                   Icons, sounds (each one in CREDITS.md)
 ideas/                      One file for each game idea
@@ -157,6 +158,13 @@ Rules for a game:
 | Baseline | y = `BASELINE` = 1.9 |
 | Descent | 0.9 below the baseline (for g, p, y), so `BOX_HEIGHT` = 2.8 |
 | Strokes | In writing order. Each stroke starts at its start dot. |
+
+The letter screen (`letter-trail/index.ts`) draws in the same units. It
+sets the `viewBox` of its SVG so that the x-height is `X_HEIGHT_PX` (250)
+CSS px, or less on a small screen. A finger position goes back to letter
+units with `getScreenCTM().inverse()`. Then `tracer.ts` checks the trace
+when the finger lifts, and `progressAlong()` moves the unicorn and the
+rainbow while the finger moves.
 
 ## Offline (PWA)
 
