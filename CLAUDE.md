@@ -151,8 +151,10 @@ scripts/                  repo tooling
 ## Claude Code setup
 
 - `.claude/settings.json`: allowlist for the usual npm, git and gh commands;
-  denies edits to `~/notes` (read-only vault), `gh pr merge` and pushes to
-  main.
+  denies edits to `~/notes` (read-only vault), PR merges, `review:*` labels
+  and pushes to main.
 - Hooks: `.claude/hooks/format.sh` runs Biome on every edited file;
-  `.claude/hooks/guard-main.sh` blocks `git push` to main.
+  `.claude/hooks/guard-main.sh` blocks `git push` to main;
+  `.claude/hooks/guard-owner.sh` blocks PR merges (also via `gh api`) and
+  `review:*` labels.
 - Personal overrides go in `.claude/settings.local.json` (git-ignored).

@@ -236,9 +236,10 @@ its own worktree. The orchestrator:
 | File | What it does |
 |---|---|
 | `CLAUDE.md` | Rules that every session reads first. |
-| `.claude/settings.json` | Allows usual commands. Stops edits outside the repo, `gh pr merge` and pushes to `main`. |
+| `.claude/settings.json` | Allows usual commands. Stops edits outside the repo, PR merges, `review:*` labels and pushes to `main`. |
 | `.claude/hooks/format.sh` | Formats each edited file with Biome. |
 | `.claude/hooks/guard-main.sh` | Stops `git push` to `main`, and stops any push while `main` is checked out. |
+| `.claude/hooks/guard-owner.sh` | Stops PR merges (also through `gh api`) and `review:*` labels. Only the owner does these. Tested in `tests/unit/guard-owner.test.ts`. |
 | `.claude/skills/next-issue/` | The `/next-issue` workflow. |
 | `.claude/settings.local.json` | Your own settings. Git ignores this file. |
 
