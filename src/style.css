@@ -315,6 +315,8 @@ body {
 	height: 100%;
 	overflow: hidden;
 	background: #6ccfac;
+	/* Creatures stack by depth (z-index = feet y); keep that inside. */
+	isolation: isolate;
 }
 
 .safari-sky {
@@ -409,7 +411,8 @@ body {
 	transform-origin: 100px 180px;
 }
 
-.creature .wheel {
+.creature .wheel,
+.safari-bus .wheel {
 	transform-box: fill-box;
 	transform-origin: center;
 }
@@ -643,5 +646,119 @@ body {
 	.trail-dot.pulse .trail-dot-halo,
 	.happy .trail-unicorn-body {
 		animation: none;
+	}
+}
+
+/* Sound safari, end of the round: the bus drives in, everyone waves, the
+ * bus drives home. Each step is one animation; its end starts the next. */
+.safari-bus {
+	--bus-w: calc(var(--size) * 1.9);
+	position: absolute;
+	left: calc(50% - var(--bus-w) / 2);
+	top: calc(77% - var(--bus-w) * 0.65);
+	width: var(--bus-w);
+	pointer-events: none;
+	/* In front of the back row, behind the front row. */
+	z-index: 75;
+}
+
+.safari-bus svg {
+	display: block;
+	width: 100%;
+	height: auto;
+	overflow: visible;
+}
+
+.safari-bus .shadow {
+	fill: #2b2140;
+	opacity: 0.14;
+}
+
+.safari-bus[data-step="arrive"] {
+	animation: safari-bus-arrive 3200ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+.safari-bus[data-step="wave"] {
+	animation: safari-bus-idle 2600ms ease-in-out;
+}
+
+.safari-bus[data-step="leave"] {
+	animation: safari-bus-leave 3200ms cubic-bezier(0.6, 0, 0.8, 0.4) forwards;
+}
+
+.safari-bus[data-step="arrive"] .wheel,
+.safari-bus[data-step="leave"] .wheel {
+	animation: safari-spin 1200ms linear infinite;
+}
+
+.safari[data-step="wave"] .creature .figure {
+	animation: safari-wave 1300ms ease-in-out 2;
+}
+
+.safari[data-step="wave"] .creature:nth-of-type(even) .figure {
+	animation-direction: reverse;
+}
+
+@keyframes safari-bus-arrive {
+	from {
+		transform: translateX(-120vw);
+	}
+	to {
+		transform: none;
+	}
+}
+
+@keyframes safari-bus-idle {
+	50% {
+		transform: translateY(-3px);
+	}
+}
+
+@keyframes safari-bus-leave {
+	from {
+		transform: none;
+	}
+	to {
+		transform: translateX(120vw);
+	}
+}
+
+@keyframes safari-wave {
+	25% {
+		transform: rotate(-7deg) translateY(-6px);
+	}
+	75% {
+		transform: rotate(7deg) translateY(-6px);
+	}
+}
+
+/* Reduced motion: the bus stands still in the meadow and nobody moves. The
+ * steps only hold the picture, then the end screen shows. */
+@media (prefers-reduced-motion: reduce) {
+	.safari-bus[data-step="arrive"],
+	.safari-bus[data-step="leave"] {
+		animation: safari-still 10ms;
+	}
+	.safari-bus[data-step="wave"] {
+		/* Another name, so the browser starts a new animation. */
+		animation: safari-hold 2600ms;
+	}
+	.safari-bus .wheel,
+	.safari[data-step="wave"] .creature .figure {
+		animation: none;
+	}
+}
+
+@keyframes safari-still {
+	from,
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes safari-hold {
+	from,
+	to {
+		opacity: 1;
 	}
 }

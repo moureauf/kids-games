@@ -147,8 +147,9 @@ export const letterTrail: Game = {
 		// Fit the board: the letter in the middle at an x-height of about
 		// X_HEIGHT_PX, with room on the right for the unicorn to rest.
 		const layout = () => {
-			const w = svg.clientWidth || el.clientWidth || 1;
-			const h = svg.clientHeight || el.clientHeight || 1;
+			const box = svg.getBoundingClientRect();
+			const w = box.width || 1;
+			const h = box.height || 1;
 			const unit = Math.min(
 				X_HEIGHT_PX,
 				(h * 0.92) / BOX_HEIGHT,
@@ -367,6 +368,13 @@ export const letterTrail: Game = {
 		svg.addEventListener("pointerup", onUp);
 		svg.addEventListener("pointercancel", onCancel);
 		svg.addEventListener("contextmenu", noMenu);
+		// Lay out again whenever the board changes size (rotation, first
+		// paint, Safari bars).
+		const resizer =
+			typeof ResizeObserver === "undefined"
+				? undefined
+				: new ResizeObserver(() => layout());
+		resizer?.observe(svg);
 		window.addEventListener("resize", layout);
 
 		for (let i = 0; i < rainbows.length; i++) setRainbow(i, 0);
@@ -392,6 +400,7 @@ export const letterTrail: Game = {
 			svg.removeEventListener("pointerup", onUp);
 			svg.removeEventListener("pointercancel", onCancel);
 			svg.removeEventListener("contextmenu", noMenu);
+			resizer?.disconnect();
 			window.removeEventListener("resize", layout);
 		};
 	},

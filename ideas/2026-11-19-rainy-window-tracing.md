@@ -1,6 +1,6 @@
 ---
 date: 2026-11-19
-for: Daughter
+for: Pre-schooler
 skill: Letter formation, pre-writing patterns
 ---
 

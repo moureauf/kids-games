@@ -8,13 +8,13 @@ To add an idea for a new game, read [IDEAS.md](../IDEAS.md).
 
 | # | Game | For | Skill | Status |
 |---|---|---|---|---|
-| 1 | [Sound safari](#1-sound-safari) | Younger child | Vocabulary, cause and effect | Playable: first scene. No round end yet ([#9](https://github.com/moureauf/kids-games/issues/9)). |
-| 2 | [Unicorn letter trail](#2-unicorn-letter-trail) | Older child | Letter formation | Playable: one letter ("a"). No round end yet ([#15](https://github.com/moureauf/kids-games/issues/15)). |
-| 3 | Fairy garden | Older child | Counting, first sounds | Idea |
+| 1 | [Sound safari](#1-sound-safari) | Toddler | Vocabulary, cause and effect | Playable: one scene, a round of 20 taps, then the bus goes home. |
+| 2 | [Unicorn letter trail](#2-unicorn-letter-trail) | Pre-schooler | Letter formation | Playable: one letter ("a"). No round end yet ([#15](https://github.com/moureauf/kids-games/issues/15)). |
+| 3 | Fairy garden | Pre-schooler | Counting, first sounds | Idea |
 | 4 | Dino dig | Both | Facts, vocabulary | Idea |
-| 5 | Silly inventions | Older child | Sequencing, logic | Idea |
-| 6 | Royal tea party | Older child | Counting, sharing | Idea |
-| 7 | Printables | Older child | Writing practice on paper | Idea |
+| 5 | Silly inventions | Pre-schooler | Sequencing, logic | Idea |
+| 6 | Royal tea party | Pre-schooler | Counting, sharing | Idea |
+| 7 | Printables | Pre-schooler | Writing practice on paper | Idea |
 
 Status values: **Idea** (no issues yet), **Planned** (issues exist),
 **In progress** (some PRs merged), **Playable** (on the site),
@@ -33,7 +33,7 @@ All games use the same hub, home button and end screen.
 
 | Item | Value |
 |---|---|
-| For | The younger child (almost 2) |
+| For | Toddlers |
 | Skill | Vocabulary, cause and effect |
 | Languages | English name, then the French name with its article when French is on |
 | Round | About 20 taps, in three scenes: farm, road, dino valley |
@@ -47,7 +47,8 @@ All games use the same hub, home button and end screen.
 3. It makes its sound: CC0 recordings for animals, sounds made by code for
    vehicles and dinosaurs.
 4. A voice says its name: "cow", then "la vache".
-5. After about 20 taps, the bus takes everyone home.
+5. After 20 taps, the safari bus comes. Everyone waves, and the bus drives
+   home. Then the end screen shows.
 
 ```mermaid
 stateDiagram-v2
@@ -61,13 +62,29 @@ stateDiagram-v2
     EndScreen --> [*]
 ```
 
-### Screenshot
+### Screenshots
 
 ![The meadow: a sheep, a dinosaur, a cow, a duck, a pig and a tractor](images/sound-safari.png)
 
 Today the game has one scene. Each tap makes the creature move, and a voice
-says its English name. The game has no end yet: the child goes home with the
-home button.
+says its English name.
+
+![The safari bus stops in the meadow and the creatures wave](images/sound-safari-bus.png)
+
+The round is 20 taps (`ROUND_TAPS` in `src/games/sound-safari/round.ts`).
+Each tap counts, also a tap on the same creature. After the last tap:
+
+1. The safari bus drives in slowly from the left and two soft toots play.
+2. The bus stops. All creatures wave, and the voice says "Bye bye!".
+3. The bus drives away to the right.
+4. The end screen shows. The game does not start again by itself.
+
+From the moment the bus comes, a tap on a creature does nothing.
+With reduced motion, the bus stands still in the meadow and the creatures do
+not move. Then the end screen shows.
+
+> **Note:** e2e tests can make the round shorter with
+> `?e2e&safariTaps=<n>`. Without `e2e`, the round is always 20 taps.
 
 ### Plan
 
@@ -76,14 +93,14 @@ home button.
 | [#6](https://github.com/moureauf/kids-games/issues/6) | Scene with 6 creatures, English name | Done |
 | [#7](https://github.com/moureauf/kids-games/issues/7) | Sounds (CC0 animals, code-made vehicles and dinosaurs) | Needs the owner: CC0 downloads |
 | [#8](https://github.com/moureauf/kids-games/issues/8) | French name after the English name | Open |
-| [#9](https://github.com/moureauf/kids-games/issues/9) | Natural end: the bus goes home | Open |
+| [#9](https://github.com/moureauf/kids-games/issues/9) | Natural end: the bus goes home | Done |
 | [#10](https://github.com/moureauf/kids-games/issues/10) | Three scenes | Open |
 
 ## 2. Unicorn letter trail
 
 | Item | Value |
 |---|---|
-| For | The older child (4) |
+| For | Pre-schoolers |
 | Skill | Print letter formation: start dot, stroke order, direction |
 | Languages | English. French letter names and words when French is on. |
 | Round | 5 letters, in RWI Set 1 order. The next round continues from the last letter. |

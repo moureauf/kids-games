@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { creatureArt } from "../../src/games/sound-safari/art";
 import { creatures } from "../../src/games/sound-safari/creatures";
+import { ROUND_TAPS, roundTaps } from "../../src/games/sound-safari/round";
 
 describe("Sound safari creatures", () => {
 	it("has six creatures with unique ids", () => {
@@ -38,4 +39,27 @@ describe("Sound safari creatures", () => {
 			});
 		});
 	}
+});
+
+describe("Sound safari round", () => {
+	it("lasts about 20 taps, more than one tap on each creature", () => {
+		expect(ROUND_TAPS).toBe(20);
+		expect(ROUND_TAPS).toBeGreaterThan(creatures.length);
+	});
+
+	it("uses the real count without ?e2e", () => {
+		expect(roundTaps("")).toBe(ROUND_TAPS);
+		expect(roundTaps("?safariTaps=2")).toBe(ROUND_TAPS);
+	});
+
+	it("lets e2e tests shorten the round", () => {
+		expect(roundTaps("?e2e&safariTaps=3")).toBe(3);
+	});
+
+	it("ignores a bad override", () => {
+		for (const bad of ["0", "-2", "1.5", "abc", ""]) {
+			expect(roundTaps(`?e2e&safariTaps=${bad}`)).toBe(ROUND_TAPS);
+		}
+		expect(roundTaps("?e2e")).toBe(ROUND_TAPS);
+	});
 });
