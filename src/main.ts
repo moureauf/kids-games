@@ -1,6 +1,7 @@
 import "./style.css";
 import type { Game, GameContext } from "./core/game";
 import { hubHash, parseRoute } from "./core/router";
+import { cancelSpeech } from "./core/speech";
 import { createEndScreen } from "./core/ui/end-screen";
 import { createHomeButton } from "./core/ui/home-button";
 import { createHub } from "./core/ui/hub";
@@ -21,6 +22,16 @@ function unmountCurrent(): void {
 	const game = current;
 	current = undefined;
 	game?.unmount();
+}
+
+// True while the end screen is on view. Games stop their own speech when
+// they unmount; the end screen has no unmount, so the router stops it.
+let onEndScreen = false;
+
+function leaveEndScreen(): void {
+	if (!onEndScreen) return;
+	onEndScreen = false;
+	cancelSpeech();
 }
 
 function showHub(): void {
@@ -45,6 +56,7 @@ function showGame(game: Game): void {
 			// Ignore a late call from a game that is no longer on screen.
 			if (current !== game || !view.isConnected) return;
 			unmountCurrent();
+			onEndScreen = true;
 			view.replaceChildren(createEndScreen(goHome));
 		},
 	};
@@ -57,6 +69,7 @@ function showGame(game: Game): void {
 
 function render(): void {
 	unmountCurrent();
+	leaveEndScreen();
 	const route = parseRoute(
 		location.hash,
 		games.map((g) => g.id),

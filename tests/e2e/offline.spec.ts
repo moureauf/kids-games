@@ -27,6 +27,9 @@ test("works offline after the first load @shot", async ({
 	await page.getByRole("link", { name: "Test game" }).click();
 	await page.getByRole("button", { name: "Finish" }).click();
 	await expect(page.getByText("Well done for trying!")).toBeVisible();
+	await expect
+		.poll(async () => (await spoken(page)).map((s) => s.text))
+		.toEqual(["Well done for trying!"]);
 	await page.getByRole("button", { name: "Home" }).click();
 	await expect(page.getByRole("link", { name: "Test game" })).toBeVisible();
 
@@ -40,7 +43,7 @@ test("works offline after the first load @shot", async ({
 	}
 	await expect
 		.poll(async () => (await spoken(page)).map((s) => s.text))
-		.toEqual(creatures.map((c) => c.en));
+		.toEqual(["Well done for trying!", ...creatures.map((c) => c.en)]);
 
 	// Settings open behind the parent gate and save offline.
 	await page.goto("./?e2e&gateMs=200#/");

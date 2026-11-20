@@ -237,6 +237,7 @@ test("after the last tap the bus takes everyone home @shot", async ({
 		"pig",
 		"sheep",
 		"Bye bye!",
+		"Well done for trying!",
 	]);
 	await expect(page).toHaveURL(/#\/sound-safari$/);
 });

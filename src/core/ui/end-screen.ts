@@ -1,6 +1,8 @@
 // The calm end-of-round screen every game shows when its round is over.
 // It praises the effort, never shows a score, and never starts a new round
-// on its own: the only way on is the home button.
+// on its own: the only way on is the home button. It says its line once
+// when it opens; a tap on the moon says it again (the child cannot read).
+import { say } from "../speech";
 import { houseSvg } from "./home-button";
 
 export const END_MESSAGE = "Well done for trying!";
@@ -35,11 +37,26 @@ export function createEndScreen(onHome: () => void): HTMLElement {
 	screen.className = "end-screen";
 	screen.setAttribute("aria-label", "End of round");
 	screen.innerHTML = `
-		${sleepyMoonSvg}
+		<button type="button" class="end-moon" aria-label="Say it again">${sleepyMoonSvg}</button>
 		<p class="end-message">${END_MESSAGE}</p>
 		<button type="button" class="end-home" aria-label="Home">${houseSvg}</button>`;
 	screen
 		.querySelector<HTMLButtonElement>(".end-home")
 		?.addEventListener("click", onHome);
+
+	// One line at a time: a tap while the line is still being said does not
+	// queue it again.
+	let speaking = false;
+	const sayLine = () => {
+		if (speaking) return;
+		speaking = true;
+		void say(END_MESSAGE, "en").then(() => {
+			speaking = false;
+		});
+	};
+	screen
+		.querySelector<HTMLButtonElement>(".end-moon")
+		?.addEventListener("click", sayLine);
+	sayLine();
 	return screen;
 }

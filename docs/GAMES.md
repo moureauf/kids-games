@@ -27,7 +27,7 @@ All games use the same hub, home button and end screen.
 | Hub | Home button in a game | End screen |
 |---|---|---|
 | ![Hub with the Sound safari tile and the settings cog](images/hub.png) | ![Home button in the top-left corner](images/game-view.png) | ![Sleeping moon and "Well done for trying!"](images/end-screen.png) |
-| One large picture tile for each game. The child does not need to read. The grey cog opens the settings after a 3 s hold. | Hold the button for 1 s to go home. A ring fills during the hold. A short tap does nothing. | Shows at the end of each round. Tap home to leave. The game does not start again by itself. |
+| One large picture tile for each game. The child does not need to read. The grey cog opens the settings after a 3 s hold. | Hold the button for 1 s to go home. A ring fills during the hold. A short tap does nothing. | Shows at the end of each round. A voice says "Well done for trying!" one time. Tap the moon to hear it again. Tap home to leave. The game does not start again by itself. |
 
 ## 1. Sound safari
 
