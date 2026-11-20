@@ -8,7 +8,7 @@ To add an idea for a new game, read [IDEAS.md](../IDEAS.md).
 
 | # | Game | For | Skill | Status |
 |---|---|---|---|---|
-| 1 | [Sound safari](#1-sound-safari) | Toddler | Vocabulary, cause and effect | Playable: one scene, a round of 20 taps, then the bus goes home. |
+| 1 | [Sound safari](#1-sound-safari) | Toddler | Vocabulary, cause and effect | Playable: one scene, English and French names, a round of 20 taps, then the bus goes home. |
 | 2 | [Unicorn letter trail](#2-unicorn-letter-trail) | Pre-schooler | Letter formation | Playable: one letter ("a"). No round end yet ([#15](https://github.com/moureauf/kids-games/issues/15)). |
 | 3 | Fairy garden | Pre-schooler | Counting, first sounds | Idea |
 | 4 | Dino dig | Both | Facts, vocabulary | Idea |
@@ -67,7 +67,11 @@ stateDiagram-v2
 ![The meadow: a sheep, a dinosaur, a cow, a duck, a pig and a tractor](images/sound-safari.png)
 
 Today the game has one scene. Each tap makes the creature move, and a voice
-says its English name.
+says its English name (en-GB voice). When French is on in the settings, the
+voice then says the French name with its article (fr-FR voice), for example
+"cow", then "la vache". If the device has no French voice, the game says
+only the English name. The French names are in
+`src/games/sound-safari/creatures.ts`.
 
 ![The safari bus stops in the meadow and the creatures wave](images/sound-safari-bus.png)
 
@@ -75,7 +79,8 @@ The round is 20 taps (`ROUND_TAPS` in `src/games/sound-safari/round.ts`).
 Each tap counts, also a tap on the same creature. After the last tap:
 
 1. The safari bus drives in slowly from the left and two soft toots play.
-2. The bus stops. All creatures wave, and the voice says "Bye bye!".
+2. The bus stops. All creatures wave, and the voice says "Bye bye!". When
+   French is on, the voice then says "Au revoir !".
 3. The bus drives away to the right.
 4. The end screen shows. The game does not start again by itself.
 
@@ -92,7 +97,7 @@ not move. Then the end screen shows.
 |---|---|---|
 | [#6](https://github.com/moureauf/kids-games/issues/6) | Scene with 6 creatures, English name | Done |
 | [#7](https://github.com/moureauf/kids-games/issues/7) | Sounds (CC0 animals, code-made vehicles and dinosaurs) | Needs the owner: CC0 downloads |
-| [#8](https://github.com/moureauf/kids-games/issues/8) | French name after the English name | Open |
+| [#8](https://github.com/moureauf/kids-games/issues/8) | French name after the English name | Done |
 | [#9](https://github.com/moureauf/kids-games/issues/9) | Natural end: the bus goes home | Done |
 | [#10](https://github.com/moureauf/kids-games/issues/10) | Three scenes | Open |
 
