@@ -68,7 +68,7 @@ flowchart LR
     C --> D[Write tests<br/>and code]
     D --> E[npm run verify]
     E -->|fails| D
-    E -->|passes| F[Screenshots<br/>and one idea]
+    E -->|passes| F[Screenshots]
     F --> G[Open PR<br/>Closes #n]
     G --> H{CI}
     H -->|fails| D
@@ -171,7 +171,7 @@ The script puts the images on the `pr-assets` branch, not on `main`.
 
 ## Ideas
 
-Each session adds one idea for a new game.
+A build PR does not need a new idea. To add an idea:
 
 1. Make a new file `ideas/<yyyy-mm-dd>-<slug>.md`.
 2. Use the format in [IDEAS.md](IDEAS.md).

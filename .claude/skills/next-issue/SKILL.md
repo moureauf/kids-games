@@ -1,6 +1,6 @@
 ---
 name: next-issue
-description: Run one build session in kids-games - pick the next issue (or the one given), build it on a branch with tests, take iPad screenshots, add an idea, and open a PR without merging. Use when asked to do the next issue, work on issue N, or run a build session.
+description: Run one build session in kids-games - pick the next issue (or the one given), build it on a branch with tests, take iPad screenshots, and open a PR without merging. Use when asked to do the next issue, work on issue N, or run a build session.
 argument-hint: "[issue number]"
 disable-model-invocation: true
 ---
@@ -86,13 +86,7 @@ If the change is visible in a game, update `docs/GAMES.md`: status, the
 it changes the code structure or a shared interface, update
 `docs/ARCHITECTURE.md`. Write in ASD-STE100 style (see `CONTRIBUTING.md`).
 
-## 7. Idea
-
-Add one new file `ideas/<yyyy-mm-dd>-<slug>.md` in the format shown in
-`IDEAS.md`. It obeys the design rules and does not repeat an existing idea
-(`npm run ideas` lists them). Never edit other idea files or `IDEAS.md`.
-
-## 8. Commit, push, PR
+## 7. Commit, push, PR
 
 ```sh
 git add -A && git commit   # message ends with "Closes #<n>"
@@ -102,11 +96,11 @@ gh issue edit <n> --remove-label in-progress   # the open PR now marks it
 gh pr checks <pr> --watch
 ```
 
-Fill in `.github/pull_request_template.md`: what changed, the checks, the
-screenshots and the new idea. **Never merge.** If CI fails, fix it on the
+Fill in `.github/pull_request_template.md`: what changed, the checks and the
+screenshots. **Never merge.** If CI fails, fix it on the
 branch.
 
-## 9. Report
+## 8. Report
 
 Tell the owner: the PR link, what it does, the CI result, anything that
 needs them, and any follow-up issues you created.

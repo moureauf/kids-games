@@ -78,8 +78,8 @@ Run **`/next-issue`** (or `/next-issue <n>`). The skill in
   **Never push to main. Never merge a PR.** A hook and branch protection
   enforce both.
 - `npm run verify` passes before the PR is opened.
-- The PR has an iPad screenshot, new assets in `CREDITS.md` (rows sorted by
-  path), and one new idea as a new file in `ideas/` (see `IDEAS.md`).
+- The PR has an iPad screenshot and new assets in `CREDITS.md` (rows sorted
+  by path). A PR does not need a new idea (see `IDEAS.md`).
 - Skip issues labelled `needs:owner` or `blocked`. If an issue needs the
   owner partway through (a download, a decision, a test on the real iPad),
   stop, add `needs:owner` with a comment saying exactly what is needed, and

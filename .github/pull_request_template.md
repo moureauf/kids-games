@@ -7,7 +7,6 @@ Closes #
 - [ ] The offline test covers any new game or screen
 - [ ] iPad screenshot attached (`npm run shots`, then `scripts/pr-screenshot.sh`)
 - [ ] New assets are listed in `CREDITS.md` (CC0 or original only)
-- [ ] One new idea added as a new file in `ideas/` (see `IDEAS.md`)
 - [ ] No names, photos or voices of the children anywhere in this PR
 - [ ] Follows the design rules in `CLAUDE.md` (no timers, streaks, scores or failure sounds; natural end)
 
