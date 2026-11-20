@@ -240,6 +240,7 @@ its own worktree. The orchestrator:
 | `.claude/hooks/format.sh` | Formats each edited file with Biome. |
 | `.claude/hooks/guard-main.sh` | Stops `git push` to `main`, and stops any push while `main` is checked out. |
 | `.claude/skills/next-issue/` | The `/next-issue` workflow. |
+| `.claude/agents/reviewer.md` | The reviewer subagent. It posts a verdict comment that starts with `<!-- review-verdict sha=<head> verdict=<approve\|changes\|owner-check> -->`. |
 | `.claude/settings.local.json` | Your own settings. Git ignores this file. |
 
 ## Prevent merge conflicts
