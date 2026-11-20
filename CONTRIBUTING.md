@@ -231,6 +231,23 @@ its own worktree. The orchestrator:
 3. Checks each PR: CI, the diff, the screenshots and privacy.
 4. Tells the owner which PRs are ready to merge.
 
+### Grade the reviewer
+
+During the agent loop trial, a reviewer subagent posts a verdict comment on
+each PR. When you merge or close a PR, add one label to grade the verdict:
+
+| Label | Use it when |
+|---|---|
+| `review:agree` | The verdict was correct. |
+| `review:missed` | The reviewer approved, but the PR had a real problem. |
+| `review:noise` | The reviewer found problems that were not real or not important. |
+
+Run `npm run review-grades`. The command counts the grades and lists the
+reviewed PRs that have no grade. After 10 graded PRs it prints the result:
+1 `review:missed` or fewer lets auto-merge start for docs and tests (after a
+bot identity). 2 or more means: change the reviewer, then grade 10 more PRs.
+Only the owner adds these labels.
+
 ### Claude Code configuration
 
 | File | What it does |

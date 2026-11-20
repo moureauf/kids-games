@@ -81,6 +81,7 @@ npm run verify
 | `npm run shots` | Makes iPad screenshots of the tests tagged `@shot`. |
 | `npm run verify` | Runs lint, types, unit tests and browser tests. |
 | `npm run ideas` | Shows all game ideas in one table. |
+| `npm run review-grades` | Counts the owner's grades of the reviewer subagent. |
 | `npm run icons` | Makes the PNG icons from `public/assets/icons/icon.svg`. |
 
 ## Documentation
