@@ -80,6 +80,9 @@ Run **`/next-issue`** (or `/next-issue <n>`). The skill in
 - `npm run verify` passes before the PR is opened.
 - The PR has an iPad screenshot and new assets in `CREDITS.md` (rows sorted
   by path). A PR does not need a new idea (see `IDEAS.md`).
+- When CI is green, a fresh `reviewer` subagent reviews the PR and posts a
+  verdict bound to the head commit. Fix its findings, 2 loops at most, then
+  add `needs:owner`. Never add a `review:*` label.
 - Skip issues labelled `needs:owner` or `blocked`. If an issue needs the
   owner partway through (a download, a decision, a test on the real iPad),
   stop, add `needs:owner` with a comment saying exactly what is needed, and

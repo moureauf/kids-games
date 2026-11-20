@@ -1,6 +1,6 @@
 ---
 name: next-issue
-description: Run one build session in kids-games - pick the next issue (or the one given), build it on a branch with tests, take iPad screenshots, and open a PR without merging. Use when asked to do the next issue, work on issue N, or run a build session.
+description: Run one build session in kids-games - pick the next issue (or the one given), build it on a branch with tests, take iPad screenshots, open a PR, and get a reviewer verdict, without merging. Use when asked to do the next issue, work on issue N, or run a build session.
 argument-hint: "[issue number]"
 disable-model-invocation: true
 ---
@@ -100,7 +100,35 @@ Fill in `.github/pull_request_template.md`: what changed, the checks and the
 screenshots. **Never merge.** If CI fails, fix it on the
 branch.
 
-## 8. Report
+## 8. Review and fix (2 loops at most)
 
-Tell the owner: the PR link, what it does, the CI result, anything that
-needs them, and any follow-up issues you created.
+When CI is green, start the `reviewer` subagent (Agent tool,
+`subagent_type: reviewer`). Give it the PR number, the issue number and the
+screenshot paths. Start a new one for each review, never continue an old
+one: each review needs a fresh context. It posts one verdict comment bound
+to the head commit.
+
+- `approve`: go to step 9.
+- `owner-check`: go to step 9. Say exactly what the owner must check.
+- `changes`: fix each blocking finding. If you think a finding is wrong,
+  do not ignore it: reply on the PR with the reason. Then run
+  `npm run verify` and `npm run pr-size`, commit, push, wait for CI, and
+  start a new reviewer.
+
+After 2 fix loops, if the verdict is still `changes`, stop: add
+`needs:owner` to the PR, comment the open findings, and report.
+
+Then run the final check. It passes only for `approve` at the current head
+with green checks:
+
+```sh
+npm run pr-ready -- <pr>
+```
+
+Never add a `review:*` label. The owner grades the reviewer.
+
+## 9. Report
+
+Tell the owner: the PR link, what it does, the CI result, the reviewer
+verdict and the `pr-ready` line, anything that needs them, and any
+follow-up issues you created.

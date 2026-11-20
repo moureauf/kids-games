@@ -72,9 +72,18 @@ flowchart LR
     F --> G[Open PR<br/>Closes #n]
     G --> H{CI}
     H -->|fails| D
-    H -->|passes| I[Owner merges]
+    H -->|passes| R{Reviewer<br/>subagent}
+    R -->|changes, 2 loops at most| D
+    R -->|approve or owner-check| I[Owner merges<br/>in a batch]
     I --> J[Deploy to<br/>GitHub Pages]
 ```
+
+After CI passes, a reviewer subagent with a fresh context checks the PR
+(`.claude/agents/reviewer.md`). It posts a verdict comment that names the
+head commit. If the verdict is `changes`, the session fixes the PR and asks
+for a new review, 2 times at most. Then the session adds `needs:owner`.
+`npm run pr-ready` shows which PRs are approved at their head commit with
+green checks.
 
 ### Issues
 
