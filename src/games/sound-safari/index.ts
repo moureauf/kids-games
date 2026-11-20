@@ -1,10 +1,12 @@
 // Sound safari: a sunny meadow with six creatures. Tap one and it moves
-// and its name is said in English. Every tap is a good tap: there is no
+// and its name is said in English (then in French, when the French setting
+// is on). Every tap is a good tap: there is no
 // wrong answer and nothing to fail. After ROUND_TAPS taps the safari bus
 // drives in, everyone waves, the bus drives home and the end screen shows.
 import { playTone, unlockAudio } from "../../core/audio";
 import type { Game, GameContext } from "../../core/game";
-import { cancelSpeech, say } from "../../core/speech";
+import { getSettings } from "../../core/settings";
+import { cancelSpeech, type Lang, sayAll } from "../../core/speech";
 import {
 	busSvg,
 	cloudSvg,
@@ -73,6 +75,17 @@ type BusStep = (typeof BUS_STEPS)[number];
 
 /** What everyone says when the bus is here. */
 const GOODBYE = "Bye bye!";
+const GOODBYE_FR = "Au revoir !";
+
+/**
+ * The English words, then the French words when the French setting is on.
+ * The setting is read each time, so a change shows at the next tap.
+ */
+function inLanguages(en: string, fr: string): { text: string; lang: Lang }[] {
+	const items: { text: string; lang: Lang }[] = [{ text: en, lang: "en" }];
+	if (getSettings().french) items.push({ text: fr, lang: "fr" });
+	return items;
+}
 
 /**
  * Bring the bus, wave, drive home, then show the end screen. Returns a
@@ -97,7 +110,7 @@ function busGoesHome(scene: HTMLElement, ctx: GameContext): () => void {
 				void playTone({ freq: 330, duration: 260, volume: 0.25 });
 			}, 320);
 		}
-		if (step === "wave") void say(GOODBYE, "en");
+		if (step === "wave") void sayAll(inLanguages(GOODBYE, GOODBYE_FR));
 	};
 	const onEnd = (e: AnimationEvent) => {
 		if (e.target !== bus || stopped) return;
@@ -151,7 +164,7 @@ export const soundSafari: Game = {
 			if (speaking === c.id) return;
 			if (speaking !== undefined) cancelSpeech();
 			speaking = c.id;
-			void say(c.en, "en").then(() => {
+			void sayAll(inLanguages(c.en, c.fr)).then(() => {
 				if (speaking === c.id) speaking = undefined;
 			});
 		};

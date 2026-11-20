@@ -1,9 +1,18 @@
-import { expect, test } from "@playwright/test";
+import { expect, type Page, test } from "@playwright/test";
+import { SETTINGS_KEY } from "../../src/core/settings";
 import { creatures } from "../../src/games/sound-safari/creatures";
 import { ROUND_TAPS } from "../../src/games/sound-safari/round";
 import { installSpeechStub, spoken } from "./helpers/speech-stub";
 
 const label = (en: string) => en[0]?.toUpperCase() + en.slice(1);
+
+/** Store the French setting before the page loads, as the settings panel does. */
+async function setFrench(page: Page, french: boolean): Promise<void> {
+	await page.addInitScript(([key, value]) => localStorage.setItem(key, value), [
+		SETTINGS_KEY,
+		JSON.stringify({ french }),
+	] as const);
+}
 
 test("the scene shows six big creatures @shot", async ({ page }, testInfo) => {
 	await page.goto("./#/sound-safari");
@@ -265,4 +274,72 @@ test("with reduced motion the bus stands still, then the round ends", async ({
 		creature: "none",
 	});
 	await expect(page.getByText("Well done for trying!")).toBeVisible();
+});
+
+test("with French on, each tap says the English name, then the French one", async ({
+	page,
+}) => {
+	await setFrench(page, true);
+	await installSpeechStub(page);
+	await page.goto("./#/sound-safari");
+	const expected = [];
+	for (const c of creatures) {
+		await page.getByRole("button", { name: label(c.en) }).tap();
+		expected.push({ text: c.en, lang: "en-GB" }, { text: c.fr, lang: "fr-FR" });
+		await expect.poll(() => spoken(page)).toEqual(expected);
+	}
+	expect(expected.map((s) => s.text)).toContain("la vache");
+});
+
+test("with French off, each tap says only the English name", async ({
+	page,
+}) => {
+	await setFrench(page, false);
+	await installSpeechStub(page);
+	await page.goto("./#/sound-safari");
+	await page.getByRole("button", { name: "Cow" }).tap();
+	await page.getByRole("button", { name: "Duck" }).tap();
+	await expect
+		.poll(() => spoken(page))
+		.toEqual([
+			{ text: "cow", lang: "en-GB" },
+			{ text: "duck", lang: "en-GB" },
+		]);
+	// Wait a little: no French follows.
+	await page.waitForTimeout(300);
+	expect(await spoken(page)).toHaveLength(2);
+});
+
+test("with French on but no French voice, only English is said", async ({
+	page,
+}) => {
+	await setFrench(page, true);
+	await installSpeechStub(page, { voices: ["en-GB"] });
+	await page.goto("./#/sound-safari");
+	await page.getByRole("button", { name: "Pig" }).tap();
+	await expect
+		.poll(() => spoken(page))
+		.toEqual([{ text: "pig", lang: "en-GB" }]);
+	await page.waitForTimeout(300);
+	expect(await spoken(page)).toHaveLength(1);
+});
+
+test("with French on, the bus says goodbye in English, then in French", async ({
+	page,
+}) => {
+	await setFrench(page, true);
+	await installSpeechStub(page);
+	await page.goto("./?e2e&safariTaps=1#/sound-safari");
+	await page.getByRole("button", { name: "Sheep" }).tap();
+	await expect(
+		page.getByRole("img", { name: "The safari bus" }),
+	).toHaveAttribute("data-step", "wave");
+	await expect
+		.poll(() => spoken(page))
+		.toEqual([
+			{ text: "sheep", lang: "en-GB" },
+			{ text: "le mouton", lang: "fr-FR" },
+			{ text: "Bye bye!", lang: "en-GB" },
+			{ text: "Au revoir !", lang: "fr-FR" },
+		]);
 });
