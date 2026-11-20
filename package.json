@@ -10,6 +10,7 @@
 		"format": "biome check --write .",
 		"typecheck": "tsc --noEmit",
 		"test": "vitest run",
+		"pr-ready": "node scripts/pr-ready.ts",
 		"e2e": "playwright test",
 		"shots": "playwright test --project=ipad-webkit --grep @shot",
 		"icons": "pwa-assets-generator",

@@ -80,6 +80,7 @@ npm run verify
 | `npm run e2e` | Runs the browser tests on iPad viewports (Playwright). |
 | `npm run shots` | Makes iPad screenshots of the tests tagged `@shot`. |
 | `npm run verify` | Runs lint, types, unit tests and browser tests. |
+| `npm run pr-ready` | Lists open PRs: ready to merge (approved at the head commit, checks green) or why not. |
 | `npm run ideas` | Shows all game ideas in one table. |
 | `npm run icons` | Makes the PNG icons from `public/assets/icons/icon.svg`. |
 
