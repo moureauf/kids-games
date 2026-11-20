@@ -285,7 +285,27 @@ body {
 	padding: 2rem;
 }
 
+.end-moon {
+	padding: 0;
+	border: none;
+	border-radius: 36px;
+	background: none;
+	-webkit-tap-highlight-color: transparent;
+	touch-action: manipulation;
+	transition: transform 120ms ease-out;
+}
+
+.end-moon:active {
+	transform: scale(0.97);
+}
+
+.end-moon:focus-visible {
+	outline: 6px solid var(--ink);
+	outline-offset: 6px;
+}
+
 .end-art {
+	display: block;
 	width: min(70vw, 480px);
 	height: auto;
 }
