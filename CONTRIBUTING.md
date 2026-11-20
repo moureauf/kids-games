@@ -325,7 +325,7 @@ Commands, file names and code names stay as they are.
 | Problem | Cause | Solution |
 |---|---|---|
 | `npm run e2e` says the port is in use | A server from an earlier run still runs on the port of this worktree. | Stop that server, or set `PORT=<free port>`. |
-| The page in `npm run preview` shows an old version | The service worker serves the old cache. | Reload two times, or clear the site data in the browser. |
+| The page shows an old version | The service worker serves the old cache. The new version loads when the hub shows (`src/core/update.ts`). Pages from before [#46](https://github.com/moureauf/kids-games/issues/46) do not have this code. | Go to the hub, or reload one time. If the old version stays, clear the site data in the browser. |
 | Playwright says a browser is missing | The browsers are not installed. | Run `npx playwright install webkit chromium`. |
 | CI says the image does not match `@playwright/test` | A dependency update changed the Playwright version. | Change `container.image` and `PLAYWRIGHT_IMAGE_VERSION` in `.github/workflows/ci.yml`. |
 | A push is blocked by `guard-main.sh` | The command pushes to `main`, or the session is on `main`. | Push from your `issue-<n>-…` branch. |

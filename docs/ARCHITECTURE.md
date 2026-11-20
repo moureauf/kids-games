@@ -139,6 +139,7 @@ Rules for a game:
 | `core/speech.ts` | `say(text, lang)`, `sayAll(items)`, `cancelSpeech()`, `unlockSpeech()`, `pickVoice()` | Prefers `en-GB` and `fr-FR`. Waits up to 1.5 s for the voices to load. Never throws. With no voice for a language, it stays silent. A watchdog resolves the promise if the browser does not send the end event. |
 | `core/audio.ts` | `unlockAudio()`, `playFile(url)`, `playTone(spec)`, `MAX_VOLUME` | Call `unlockAudio()` on the first tap (iPad rule). Volume limit 0.5. Tones fade in and out. `duration` is in milliseconds. |
 | `core/router.ts` | Route parsing | Pure functions with unit tests. |
+| `core/update.ts` | `watchForUpdates(container, onHub, reload)` | Reloads for a new version only when the hub shows. See [New versions](#new-versions). |
 | `core/ui/home-button.ts` | Home button | 120 px. Works only after a 1 s hold. A ring fills during the hold. |
 | `core/ui/end-screen.ts` | End screen | A sleeping moon and "Well done for trying!". No automatic restart. |
 
@@ -181,13 +182,47 @@ sequenceDiagram
     P->>SW: Load the site
     SW->>P: All files from the cache
     Note over P,SW: Later, with network and a new version
+    P->>N: The hub shows: look for a new sw.js
     SW->>N: Get the new version in the background
-    SW->>P: Use it at the next visit
+    SW->>P: skipWaiting() and clientsClaim(): control this page now
+    alt The hub is on screen
+        P->>P: Reload: show the new version
+    else A game is open
+        P->>P: Wait. Reload when the hub shows.
+    end
 ```
 
 - The configuration is in `vite.config.ts`.
 - The precache list has every built file and every file in `public/assets/`.
 - `registerType: "autoUpdate"`: the child never sees an update prompt.
+- `skipWaiting: true`: a new version does not wait until all tabs close.
+  The plugin sets this only with `injectRegister: "auto"`, so
+  `vite.config.ts` sets it.
+
+### New versions
+
+`src/core/update.ts` shows a new version at a calm moment:
+
+1. Each time the hub shows, the page asks the browser to look for a new
+   `sw.js`. The home screen app can stay open for days, so the browser
+   does not always look by itself. When there is no network, the check
+   fails with no effect.
+2. When a new service worker takes control (`controllerchange`), the page
+   reloads if the hub is on screen.
+3. If a game or its end screen is open, the page does not reload. It
+   reloads one time when the child goes home.
+4. On the first visit, the first service worker takes control. This is
+   not a new version, so the page does not reload.
+
+There is no banner and no prompt. Pages that have code from before this
+change (issue [#46](https://github.com/moureauf/kids-games/issues/46))
+show the new version at the next visit.
+
+Tests: `tests/unit/update.test.ts` tests the decision.
+`tests/e2e/update.spec.ts` serves a private copy of `dist/` on its own
+port. It installs build A, opens a game, changes `index.html` and `sw.js`
+(build B), and makes the new service worker take control. Then it checks
+that the game stays open, and that the hub shows build B after one reload.
 
 > **Caution:** Do not put a file two times in the precache list (for
 > example with `includeAssets` and the glob). Workbox then stops the install
