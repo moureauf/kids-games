@@ -1,7 +1,8 @@
 # Ideas
 
-Each build session adds **one new idea** that obeys the design rules in
-[`CLAUDE.md`](CLAUDE.md) and [`docs/DESIGN.md`](docs/DESIGN.md).
+An idea for a new game obeys the design rules in [`CLAUDE.md`](CLAUDE.md)
+and [`docs/DESIGN.md`](docs/DESIGN.md). A build PR does not need a new idea.
+The owner, or a separate idea session, adds ideas.
 
 ## Add an idea
 
