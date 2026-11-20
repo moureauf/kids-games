@@ -519,6 +519,136 @@ body {
 	}
 }
 
+/* Unicorn letter trail: a big letter on guide lines, traced with a finger. */
+.trail {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	background: linear-gradient(#ffeef6, #fff7e8 60%);
+}
+
+.trail-board {
+	display: block;
+	width: 100%;
+	height: 100%;
+	touch-action: none;
+	-webkit-tap-highlight-color: transparent;
+}
+
+.trail-guides line {
+	stroke: #b9aed6;
+	stroke-width: 0.025;
+}
+
+.trail-xline {
+	stroke-dasharray: 0.08 0.08;
+}
+
+.trail-letter path {
+	stroke: #d9d3e6;
+}
+
+.trail-arrows {
+	fill: #8a7cb8;
+	display: none;
+}
+
+.trail.reduced-motion .trail-arrows {
+	display: inline;
+}
+
+.trail-demo {
+	stroke: #ffc94d;
+}
+
+.trail-spark {
+	fill: #ffffff;
+	stroke: #ffc94d;
+	stroke-width: 0.05;
+}
+
+.trail-dot-core {
+	fill: #5cc8a8;
+	stroke: #2b2140;
+	stroke-width: 0.025;
+}
+
+.trail-dot-halo {
+	fill: #5cc8a8;
+	opacity: 0.35;
+}
+
+.trail-dot.pulse .trail-dot-halo {
+	transform-box: fill-box;
+	transform-origin: center;
+	animation: trail-pulse 1400ms ease-in-out infinite;
+}
+
+.trail.tracing .trail-dot,
+.trail[data-state="done"] .trail-dot {
+	visibility: hidden;
+}
+
+@keyframes trail-pulse {
+	50% {
+		transform: scale(1.45);
+		opacity: 0.15;
+	}
+}
+
+.trail-unicorn {
+	transition: transform 450ms ease-in-out;
+	pointer-events: none;
+}
+
+.trail.tracing .trail-unicorn {
+	transition: none;
+}
+
+.trail-unicorn-body {
+	transform-box: view-box;
+	transform-origin: 100px 180px;
+}
+
+.happy .trail-unicorn-body {
+	animation: trail-hop 900ms ease-out 2;
+}
+
+@keyframes trail-hop {
+	30% {
+		transform: translateY(-36px) rotate(-4deg);
+	}
+	60% {
+		transform: scale(1.06, 0.94);
+	}
+}
+
+/* The unicorn's happy face and sparkles show only when it is happy. */
+.face-happy,
+.sparkles {
+	display: none;
+}
+
+.happy .face-happy,
+.happy .sparkles {
+	display: inline;
+}
+
+.happy .face-calm {
+	display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.trail-unicorn {
+		transition: none;
+	}
+	.trail-dot.pulse .trail-dot-halo,
+	.happy .trail-unicorn-body {
+		animation: none;
+	}
+}
+
 /* Sound safari, end of the round: the bus drives in, everyone waves, the
  * bus drives home. Each step is one animation; its end starts the next. */
 .safari-bus {

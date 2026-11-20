@@ -9,8 +9,9 @@ export default defineConfig({
 	base: "/kids-games/",
 	plugins: [
 		VitePWA({
-			// A new version installs in the background and is used on the next
-			// visit. The child never sees an update prompt.
+			// A new version installs in the background, takes control at once,
+			// and src/core/update.ts reloads the page when the hub shows. The
+			// child never sees an update prompt.
 			registerType: "autoUpdate",
 			injectRegister: "script-defer",
 			// The glob below already precaches the icons; listing them twice with
@@ -58,6 +59,9 @@ export default defineConfig({
 				cleanupOutdatedCaches: true,
 				// Control the first page at once, so the first visit is enough.
 				clientsClaim: true,
+				// A new version must not wait until every tab is closed. The plugin
+				// sets this only with injectRegister "auto", so set it here.
+				skipWaiting: true,
 			},
 		}),
 	],

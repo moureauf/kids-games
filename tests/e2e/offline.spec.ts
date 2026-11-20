@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { letters } from "../../src/games/letter-trail/letters";
 import { creatures } from "../../src/games/sound-safari/creatures";
 import { installSpeechStub, spoken } from "./helpers/speech-stub";
 
@@ -57,6 +58,43 @@ test("works offline after the first load @shot", async ({
 	await page.reload();
 	await openSettings();
 	await expect(french).toHaveAttribute("aria-checked", "true");
+
+	// Unicorn letter trail: trace "a" offline and hear the praise.
+	await page.goto("./#/");
+	await page.getByRole("link", { name: "Unicorn letter trail" }).click();
+	const trail = page.locator(".trail");
+	await expect(trail).toBeVisible();
+	for (const stroke of letters.a?.strokes ?? []) {
+		const screen = await page.locator(".trail-board").evaluate((svg, pts) => {
+			const m = (svg as SVGSVGElement).getScreenCTM();
+			if (!m) throw new Error("no CTM");
+			// Extra points between the stroke points, like a real finger.
+			const out: { x: number; y: number }[] = [];
+			pts.forEach((p, i) => {
+				const prev = pts[i - 1];
+				const n = prev
+					? Math.ceil(Math.hypot(p.x - prev.x, p.y - prev.y) / 0.04)
+					: 1;
+				for (let k = 1; k <= n; k++) {
+					const x = prev ? prev.x + ((p.x - prev.x) * k) / n : p.x;
+					const y = prev ? prev.y + ((p.y - prev.y) * k) / n : p.y;
+					const s = new DOMPoint(x, y).matrixTransform(m);
+					out.push({ x: s.x, y: s.y });
+				}
+			});
+			return out;
+		}, stroke);
+		const [first, ...rest] = screen;
+		if (!first) throw new Error("empty stroke");
+		await page.mouse.move(first.x, first.y);
+		await page.mouse.down();
+		for (const p of rest) await page.mouse.move(p.x, p.y);
+		await page.mouse.up();
+	}
+	await expect(trail).toHaveAttribute("data-state", "done");
+	await expect
+		.poll(async () => (await spoken(page)).map((s) => s.text))
+		.toContain("What careful tracing. Well done!");
 });
 
 test("is installable on the iPad", async ({ page, request }) => {
