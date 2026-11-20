@@ -5,6 +5,7 @@ import { cancelSpeech } from "./core/speech";
 import { createEndScreen } from "./core/ui/end-screen";
 import { createHomeButton } from "./core/ui/home-button";
 import { createHub } from "./core/ui/hub";
+import { watchForUpdates } from "./core/update";
 import { availableGames } from "./games";
 
 const app = document.querySelector<HTMLElement>("#app");
@@ -13,6 +14,20 @@ const root: HTMLElement = app;
 
 const games = availableGames(location.search);
 let current: Game | undefined;
+
+function currentRoute() {
+	return parseRoute(
+		location.hash,
+		games.map((g) => g.id),
+	);
+}
+
+// A new version loads only when the hub is on screen, never in a game.
+const updates = watchForUpdates(
+	"serviceWorker" in navigator ? navigator.serviceWorker : undefined,
+	() => currentRoute().name === "hub",
+	() => location.reload(),
+);
 
 function goHome(): void {
 	location.hash = hubHash();
@@ -70,14 +85,12 @@ function showGame(game: Game): void {
 function render(): void {
 	unmountCurrent();
 	leaveEndScreen();
-	const route = parseRoute(
-		location.hash,
-		games.map((g) => g.id),
-	);
+	const route = currentRoute();
 	const game =
 		route.name === "game" ? games.find((g) => g.id === route.id) : undefined;
 	if (game) showGame(game);
 	else showHub();
+	updates.screenShown();
 }
 
 window.addEventListener("hashchange", render);
