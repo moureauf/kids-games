@@ -156,3 +156,7 @@ scripts/                  repo tooling
 - Hooks: `.claude/hooks/format.sh` runs Biome on every edited file;
   `.claude/hooks/guard-main.sh` blocks `git push` to main.
 - Personal overrides go in `.claude/settings.local.json` (git-ignored).
+- `.claude/agents/reviewer.md`: the reviewer subagent (Opus, fresh
+  context). It checks a PR against its issue and this file, and posts one
+  verdict comment bound to the head commit. Keep its checklist in step
+  with the rules here.
