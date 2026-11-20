@@ -166,6 +166,35 @@ export const creatureArt: Record<string, string> = {
 	dinosaur,
 };
 
+/**
+ * The safari bus that takes everyone home at the end of a round. Our own
+ * design: a round yellow bus with a striped sun roof and open windows. It
+ * has no face. It faces right in a 320 x 220 box, wheels on y = 206.
+ */
+export const busSvg = `
+<svg class="safari-bus-art" viewBox="0 0 320 220" aria-hidden="true" focusable="false">
+	<ellipse class="shadow" cx="160" cy="207" rx="140" ry="9"/>
+	<g class="bus-body">
+		<path d="M52 52 v-24 M110 52 v-24 M168 52 v-24 M226 52 v-24" stroke="${INK}" stroke-width="6" stroke-linecap="round"/>
+		<rect x="34" y="6" width="214" height="24" rx="12" fill="${WHITE}" ${O}/>
+		<path d="M62 9 v18 M96 9 v18 M130 9 v18 M164 9 v18 M198 9 v18 M232 9 v18" stroke="${CORAL}" stroke-width="14"/>
+		<rect x="34" y="6" width="214" height="24" rx="12" fill="none" ${O}/>
+		<path d="M30 70 q0 -20 20 -20 h196 q18 0 26 18 l30 62 q6 12 6 26 v14 q0 18 -18 18 h-242 q-18 0 -18 -18 z" fill="${SUN}" ${O}/>
+		<rect x="46" y="66" width="46" height="46" rx="14" fill="#cfe0ff" ${O}/>
+		<rect x="104" y="66" width="46" height="46" rx="14" fill="#cfe0ff" ${O}/>
+		<rect x="162" y="66" width="46" height="46" rx="14" fill="#cfe0ff" ${O}/>
+		<path d="M222 66 h24 q8 0 12 8 l20 40 h-56 z" fill="#cfe0ff" ${O} />
+		<path d="M54 76 l12 -4 l-12 18 z M112 76 l12 -4 l-12 18 z M170 76 l12 -4 l-12 18 z M230 76 l12 -4 l-12 18 z" fill="${WHITE}" opacity="0.8"/>
+		<path d="M33 132 h264" stroke="${MINT}" stroke-width="16"/>
+		<circle cx="292" cy="160" r="9" fill="${WHITE}" ${O}/>
+		<rect x="22" y="152" width="20" height="14" rx="7" fill="${CORAL}" ${O}/>
+		<rect x="286" y="176" width="24" height="14" rx="7" fill="#d9d2e6" ${O}/>
+		<path d="M30 70 q0 -20 20 -20 h196 q18 0 26 18 l30 62 q6 12 6 26 v14 q0 18 -18 18 h-242 q-18 0 -18 -18 z" fill="none" ${O}/>
+	</g>
+	${wheel(82, 178, 28)}
+	${wheel(238, 178, 28)}
+</svg>`;
+
 // --------------------------------------------------------------- scenery
 
 /** The land: far hills, the meadow and a winding lane. Stretches to fit. */
