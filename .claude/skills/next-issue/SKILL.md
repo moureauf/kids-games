@@ -96,8 +96,8 @@ gh issue edit <n> --remove-label in-progress   # the open PR now marks it
 gh pr checks <pr> --watch
 ```
 
-Fill in `.github/pull_request_template.md`: what changed, the checks, the
-and the screenshots. **Never merge.** If CI fails, fix it on the
+Fill in `.github/pull_request_template.md`: what changed, the checks and the
+screenshots. **Never merge.** If CI fails, fix it on the
 branch.
 
 ## 8. Report
