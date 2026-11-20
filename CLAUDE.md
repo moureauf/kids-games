@@ -74,6 +74,9 @@ Run **`/next-issue`** (or `/next-issue <n>`). The skill in
 `.claude/skills/next-issue/` has the step-by-step loop. The rules:
 
 - One issue per session, one PR per issue, inside the issue's done-criterion.
+- Size: `size:S` is 250 changed lines at most, `size:M` 500, without tests,
+  lockfiles and binary files (`npm run pr-size`). Split larger work into
+  more issues.
 - Branch `issue-<n>-<short-slug>` from an up-to-date main.
   **Never push to main. Never merge a PR.** A hook and branch protection
   enforce both.
@@ -123,6 +126,7 @@ Several sessions can run at once:
 | `npm run e2e` | Playwright on iPad viewports, against the production build (own port per checkout) |
 | `npm run shots` | Screenshot tests tagged `@shot` into `screenshots/` |
 | `npm run verify` | Lint, types, unit and e2e: run before every PR |
+| `npm run pr-size` | Changed lines against main, checked against the issue's size limit |
 | `npm run icons` | Regenerate PNG icons from `public/assets/icons/icon.svg` |
 
 ## Layout

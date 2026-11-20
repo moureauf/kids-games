@@ -27,6 +27,7 @@ body:
     id: size
     attributes:
       label: Size
+      description: Changed lines without tests, lockfiles and binary files. S is 250 at most, M is 500. Split larger work into more issues.
       options: [S, M]
     validations:
       required: true
