@@ -270,6 +270,17 @@ flowchart LR
   image version and `@playwright/test` are different.
 - `.github/workflows/deploy.yml`: builds and deploys to GitHub Pages on each
   push to `main`.
+- `.github/workflows/pr-labels.yml`: sets the size and tier labels on each
+  PR (`scripts/pr-labels.ts`). It runs on `pull_request_target`, so the
+  workflow and the script come from `main` and a PR cannot change them. It
+  does not check out or run PR code. It reads the file list from the API.
+  - `size:over`: the changed lines are more than the limit of the issue
+    (from the branch name `issue-<n>-...`). The rules are the same as
+    `npm run pr-size`. If you change one, change the other.
+  - One tier label: `tier:owner-only` (`CLAUDE.md`, `.claude/`,
+    `.github/`), `tier:docs` (only `docs/` and `*.md`), `tier:tests` (only
+    `tests/`), else `tier:game`.
+  - If a person changes these labels, the workflow sets them again.
 - Repo settings: squash merge only, branches deleted after merge, secret
   scanning and push protection on.
 
@@ -282,4 +293,5 @@ flowchart LR
 | Workbox `generateSW` | All files precached with no custom code | A hand-written service worker |
 | Playwright container in CI | No apt mirror stalls | `playwright install-deps` on each run |
 | One file for each idea | No merge conflicts between parallel PRs | One shared table |
+| Size and tier labels from `pull_request_target` | A PR cannot change the rules that label it | A check in the PR's own CI (the PR can edit it) |
 | Claim comments on issues | Parallel sessions never take the same issue | A label only (two sessions can add it at the same time) |
