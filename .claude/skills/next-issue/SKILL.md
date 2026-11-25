@@ -21,6 +21,19 @@ Sessions may run in parallel, so each one works in its own git worktree.
 - In the worktree: `git fetch -q origin`, and run `npm ci` if
   `node_modules` is missing.
 
+## 1b. WIP limit
+
+Do not start new work when 3 or more PRs wait for the owner:
+
+```sh
+node scripts/wip-check.ts
+```
+
+It counts open PRs that are not drafts and not from Dependabot. If it
+fails (3 or more), do not claim an issue. Run `npm run pr-ready` to list
+the PRs and their state, tell the owner that the WIP limit stops the
+session, give the list, and stop.
+
 ## 2. Claim the issue
 
 ```sh

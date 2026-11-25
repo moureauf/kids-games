@@ -84,6 +84,10 @@ Run **`/next-issue`** (or `/next-issue <n>`). The skill in
   owner partway through (a download, a decision, a test on the real iPad),
   stop, add `needs:owner` with a comment saying exactly what is needed, and
   end the session.
+- **WIP limit: 3.** A session does not start when 3 or more PRs wait for
+  the owner (open, not draft, not Dependabot). `node scripts/wip-check.ts`
+  checks it before the claim. Then list them with `npm run pr-ready` and
+  stop.
 
 ## Documentation
 
